@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/18 19:26:31 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/18 20:00:19 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,9 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <fcntl.h>
+
+# define O_YELLOW "\033[01;33m"
+# define O_NC "\033[0m"
 
 #endif
