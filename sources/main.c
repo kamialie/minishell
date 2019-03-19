@@ -14,6 +14,9 @@
 
 void	free_commands(char **commands)
 {
+	int		i;
+
+	i = -1;
 	while (commands[++i] != NULL)
 		free(commands[i]);
 	free(commands);
@@ -21,14 +24,10 @@ void	free_commands(char **commands)
 
 int	check_command(char **commands)
 {
-	int		i;
-
-	i = -1;
-	commands = ft_strsplit(str, ' ');
 	if (ft_strequ(commands[0], "exit"))
 	{
 		free_commands(commands);
-		return (0);
+		return (1);
 	}
 	else
 	{
@@ -50,7 +49,7 @@ int	main(void)
 	{
 		buf[ret] = '\0';
 		str = ft_strtrim(buf);
-		if (*str != '\0' && check_command(ft_strsplit(str)))
+		if (*str != '\0' && check_command(ft_strsplit(str, ' ')))
 			return (0);
 		free(str);
 		ft_putstr(O_YELLOW "minishell " O_NC);
