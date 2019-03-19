@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/25 13:05:54 by rgyles            #+#    #+#             */
-/*   Updated: 2018/12/04 14:01:32 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/19 17:37:08 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static int	ft_length_trim(char const *s)
 {
-	int	i;
-	int	end;
+	size_t	i;
+	size_t	end;
 
 	i = 0;
+	end = 0;
 	while (*s == ' ' || *s == '\n' || *s == '\t')
 		s++;
 	while (s[i] != '\0')

@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 16:13:15 by rgyles            #+#    #+#              #
-#    Updated: 2019/03/12 11:21:33 by rgyles           ###   ########.fr        #
+#    Updated: 2019/03/19 17:42:59 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,6 @@ all: $(NAME)
 	@gcc $(FLAGS) $(INCLUDES) -o $@ -c $<
 
 $(NAME): $(OBJ)
-	@gcc -Wall -Wextra -Werror -c $(SRC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
