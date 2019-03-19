@@ -12,26 +12,31 @@
 
 #include "minishell.h"
 
-int	check_command(char *str)
+void	free_commands(char **commands)
+{
+	while (commands[++i] != NULL)
+		free(commands[i]);
+	free(commands);
+}
+
+int	check_command(char **commands)
 {
 	int		i;
-	int		value;
-	char	**command;
 
 	i = -1;
-	value = 0;
-	command = ft_strsplit(str, ' ');
-	if (ft_strequ(command[0], "exit"))
-		value = 1;
+	commands = ft_strsplit(str, ' ');
+	if (ft_strequ(commands[0], "exit"))
+	{
+		free_commands(commands);
+		return (0);
+	}
 	else
 	{
 		ft_putstr(N_FOUND);
-		ft_putendl(command[0]);
+		ft_putendl(commands[0]);
 	}
-	while (command[++i] != NULL)
-		free(command[i]);
-	free(command);
-	return (value);
+	free_commands(commands);
+	return (0);
 }
 
 int	main(void)
@@ -45,7 +50,7 @@ int	main(void)
 	{
 		buf[ret] = '\0';
 		str = ft_strtrim(buf);
-		if (*str != '\0' && check_command(str))
+		if (*str != '\0' && check_command(ft_strsplit(str)))
 			return (0);
 		free(str);
 		ft_putstr(O_YELLOW "minishell " O_NC);
