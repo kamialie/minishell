@@ -1,45 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*   ft_split_whitespaces.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/25 13:14:39 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/20 13:30:01 by rgyles           ###   ########.fr       */
+/*   Created: 2018/10/26 16:45:32 by rgyles            #+#    #+#             */
+/*   Updated: 2019/03/20 13:29:27 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_count_words(char const *s, char c)
+static int	ft_count_words(char const *s)
 {
 	int count;
 
 	count = 0;
 	while (*s != '\0')
 	{
-		while (*s == c)
+		while (*s == ' ' || *s == '\n' || *s == '\t')
 			s++;
 		if (*s == '\0')
 			return (count);
 		count++;
-		while (*s != c && *s != '\0')
+		while (*s != ' ' && *s != '\n' && *s != '\t' && *s != '\0')
 			s++;
 	}
 	return (count);
 }
 
-static int	ft_count_letters(char *s, char c)
+static int	ft_count_letters(char *s)
 {
 	int count;
 
 	count = 0;
 	while (*s != '\0')
 	{
-		while (*s == c)
+		while (*s == ' ' || *s == '\n' || *s == '\t')
 			s++;
-		while (*s != c && *s != '\0')
+		while (*s != ' ' && *s != '\n' && *s != '\t' && *s != '\0')
 		{
 			count++;
 			s++;
@@ -49,14 +49,14 @@ static int	ft_count_letters(char *s, char c)
 	return (count);
 }
 
-static char	*ft_write_word(char **s, char c)
+static char	*ft_write_word(char **s)
 {
 	int		i;
 	int		count;
 	char	*word;
 
 	i = 0;
-	count = ft_count_letters(*s, c);
+	count = ft_count_letters(*s);
 	if (!(word = (char *)malloc(sizeof(*word) * (count + 1))))
 		return (NULL);
 	while (i < count)
@@ -84,25 +84,23 @@ static void	ft_free(char ***array, int n)
 	*array = NULL;
 }
 
-char		**ft_strsplit(char const *s, char c)
+char		**ft_split_whitespaces(char *s)
 {
 	int		i;
 	int		count;
-	char	*str;
 	char	**array;
 
 	if (s == NULL)
 		return (NULL);
 	i = 0;
-	str = (char *)s;
-	count = ft_count_words(str, c);
+	count = ft_count_words(s);
 	if (!(array = (char **)malloc(sizeof(*array) * (count + 1))))
 		return (NULL);
 	while (i < count)
 	{
-		while (*str == c || *str != '\0')
-			str++;
-		if ((array[i] = ft_write_word(&str, c)) == NULL)
+		while (*s != '\0' && (*s == ' ' || *s == '\n' || *s == '\t'))
+			s++;
+		if ((array[i] = ft_write_word(&s)) == NULL)
 		{
 			ft_free(&array, i);
 			return (NULL);

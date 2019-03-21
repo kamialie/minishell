@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 16:13:15 by rgyles            #+#    #+#              #
-#    Updated: 2019/03/19 17:42:59 by rgyles           ###   ########.fr        #
+#    Updated: 2019/03/20 13:14:12 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRC = ft_strlen.c\
 	  ft_strjoin.c\
 	  ft_strtrim.c\
 	  ft_strsplit.c\
+	  ft_split_whitespaces.c\
 	  ft_strextract.c\
 	  ft_itoa.c\
 	  ft_putchar.c\

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/19 17:56:47 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/20 15:58:58 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@ void	free_commands(char **commands)
 	free(commands);
 }
 
-int	check_command(char **commands)
+int		check_command(char **commands, char **environ)
 {
 	if (ft_strequ(commands[0], "exit"))
 	{
 		free_commands(commands);
 		return (1);
 	}
+	else if (ft_strequ(commands[0], "echo"))
+		echo(commands + 1);
+	else if (ft_strequ(commands[0], "env"))
+		env(*(commands + 1), environ);
+	else if (ft_strequ(commands[0], "pwd"))
+		pwd(*(commands + 1), environ);
 	else
 	{
 		ft_putstr(N_FOUND);
@@ -38,19 +44,46 @@ int	check_command(char **commands)
 	return (0);
 }
 
-int	main(void)
+char	**init_environment(char **environ)
+{
+	size_t	i;
+	char	**my_env;
+
+	i = 0;
+	while (environ[i] != NULL)
+		++i;
+	my_env = (char **)malloc(sizeof(*my_env) * (i + 1));
+	i = 0;
+	while (*environ != NULL)
+	{
+		my_env[i] = ft_strdup(*environ);
+		++i;
+		++environ;
+	}
+	return (my_env);
+}
+
+int		main(int args, char **argv, char **environ)
 {
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
 	char	*str;
+	char	**my_env;
 
+	(void)args;
+	(void)argv;
+	my_env = init_environment(environ);
 	ft_putstr(O_YELLOW "minishell " O_NC);
 	while ((ret = read(0, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
 		str = ft_strtrim(buf);
-		if (*str != '\0' && check_command(ft_strsplit(str, ' ')))
+		if (*str != '\0' && check_command(ft_split_whitespaces(str), my_env))
+		{
+			free(my_env);
+			free(str);
 			return (0);
+		}
 		free(str);
 		ft_putstr(O_YELLOW "minishell " O_NC);
 	}
