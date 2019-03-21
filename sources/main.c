@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/20 15:58:58 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/21 15:20:46 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_commands(char **commands)
 	free(commands);
 }
 
-int		check_command(char **commands, char **environ)
+int		check_command(char **commands, char **my_env)
 {
 	if (ft_strequ(commands[0], "exit"))
 	{
@@ -32,9 +32,9 @@ int		check_command(char **commands, char **environ)
 	else if (ft_strequ(commands[0], "echo"))
 		echo(commands + 1);
 	else if (ft_strequ(commands[0], "env"))
-		env(*(commands + 1), environ);
+		env(*(commands + 1), my_env);
 	else if (ft_strequ(commands[0], "pwd"))
-		pwd(*(commands + 1), environ);
+		pwd(*(commands + 1), my_env);
 	else
 	{
 		ft_putstr(N_FOUND);
@@ -42,25 +42,6 @@ int		check_command(char **commands, char **environ)
 	}
 	free_commands(commands);
 	return (0);
-}
-
-char	**init_environment(char **environ)
-{
-	size_t	i;
-	char	**my_env;
-
-	i = 0;
-	while (environ[i] != NULL)
-		++i;
-	my_env = (char **)malloc(sizeof(*my_env) * (i + 1));
-	i = 0;
-	while (*environ != NULL)
-	{
-		my_env[i] = ft_strdup(*environ);
-		++i;
-		++environ;
-	}
-	return (my_env);
 }
 
 int		main(int args, char **argv, char **environ)

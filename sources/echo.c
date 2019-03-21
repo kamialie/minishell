@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 12:46:56 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/20 14:48:43 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/21 15:13:11 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	pwd(char *str, char **environ)
 	}
 }
 
-void	env(char *str, char **environ)
+void	env(char *str, char **my_env)
 {
 	if (str != NULL)
 	{
@@ -51,10 +51,10 @@ void	env(char *str, char **environ)
 	}
 	else
 	{
-		while (*environ != NULL)
+		while (*my_env != NULL)
 		{
-			ft_putendl(*environ);
-			++environ;
+			ft_putendl(*my_env);
+			++my_env;
 		}
 	}
 }
