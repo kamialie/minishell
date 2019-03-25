@@ -12,27 +12,86 @@
 
 #include "minishell.h"
 
-char	**init_environment(char **environ)
+void		free_envi(t_envi *head)
 {
-	size_t	i;
-	char	**my_env;
+	t_envi	*tmp;
 
-	i = 0;
-	while (environ[i] != NULL)
-		++i;
-	my_env = (char **)malloc(sizeof(*my_env) * (i + 1));
-	i = 0;
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+}
+
+void		unset_envi(char *str, t_envi **head)
+{
+	t_envi	*tmp;
+	t_envi	*current;
+
+	current = *head;
+	if (ft_strstr(current->field, str))
+	{
+		*head = (*head)->next;
+		free(current);
+	}
+	else
+	{
+		tmp = current;
+		current = current->next;
+		while (current != NULL)
+		{
+			if (ft_strstr(current->field, str))
+			{
+				tmp->next = current->next;
+				return ;
+			}
+			tmp = current;
+			current = current->next;
+		}
+	}
+}
+
+static void	push_back_envi_field(t_envi **head, char *field, char *value)
+{
+	t_envi	*new;
+	t_envi	*tmp;
+
+	new = (t_envi *)malloc(sizeof(*new));
+	new->field = field;
+	new->value = value;
+	new->next = NULL;
+	if (*head == NULL)
+		*head = new;
+	else
+	{
+		tmp = *head;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+}
+
+t_envi	*init_environment(char **environ)
+{
+	char	*p;
+	char	*field;
+	char	*value;
+	t_envi	*head;
+
+	head = NULL;
 	while (*environ != NULL)
 	{
+		p = ft_strchr(*environ, '=');
+		field = ft_strsub(*environ, 0, ++p - *environ);
 		if (ft_strstr(*environ, "SHELL"))
-			my_env[i] = ft_strdup("SHELL=NEED TO ADD MY BINARY PLUS PATH");
+			value = getcwd(NULL, 0); //need full path to binary
 		else if (ft_strstr(*environ, "SHLVL"))
-			my_env[i] = ft_strjoin("SHLVL=", ft_itoa(ft_atoi(*environ + 6) + 1));
+			value = ft_itoa(ft_atoi(*environ + 6) + 1);
 		else
-			my_env[i] = ft_strdup(*environ);
-		++i;
+			value = ft_strsub(p, 0, ft_strlen(p));
+		push_back_envi_field(&head, field, value);
 		++environ;
 	}
-	my_env[i] = NULL;
-	return (my_env);
+	return (head);
 }

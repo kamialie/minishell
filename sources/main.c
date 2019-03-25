@@ -22,7 +22,7 @@ void	free_commands(char **commands)
 	free(commands);
 }
 
-int		check_command(char **commands, char **my_env)
+int		check_command(char **commands, t_envi *head)
 {
 	if (ft_strequ(commands[0], "exit"))
 	{
@@ -32,10 +32,12 @@ int		check_command(char **commands, char **my_env)
 	else if (ft_strequ(commands[0], "echo"))
 		echo(commands + 1);
 	else if (ft_strequ(commands[0], "env"))
-		env(*(commands + 1), my_env);
+		env(*(commands + 1), head);
+	else if (ft_strequ(commands[0], "unsetenv"))
+		unset_envi(commands[1], &head);
 	else
 	{
-		command(commands, my_env);
+		//command(commands, my_env);
 		//ft_putstr(N_FOUND);
 		//ft_putendl(commands[0]);
 	}
@@ -48,7 +50,7 @@ int		main(int args, char **argv, char **environ)
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
 	char	*str;
-	char	**my_env;
+	t_envi	*my_env;
 
 	(void)args;
 	(void)argv;
@@ -60,7 +62,7 @@ int		main(int args, char **argv, char **environ)
 		str = ft_strtrim(buf);
 		if (*str != '\0' && check_command(ft_split_whitespaces(str), my_env))
 		{
-			free(my_env);
+			free_envi(my_env);
 			free(str);
 			return (0);
 		}

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	env(char *str, char **my_env)
+void	env(char *str, t_envi *head)
 {
 	if (str != NULL)
 	{
@@ -22,10 +22,11 @@ void	env(char *str, char **my_env)
 	}
 	else
 	{
-		while (*my_env != NULL)
+		while (head != NULL)
 		{
-			ft_putendl(*my_env);
-			++my_env;
+			ft_putstr(head->field);
+			ft_putendl(head->value);
+			head = head->next;
 		}
 	}
 }

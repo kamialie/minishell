@@ -53,6 +53,7 @@ SRC = ft_strlen.c\
 	  ft_strequ.c\
 	  ft_strnequ.c\
 	  ft_strsub.c\
+	  ft_strcsub.c\
 	  ft_strjoin.c\
 	  ft_strtrim.c\
 	  ft_strsplit.c\

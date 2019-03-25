@@ -23,10 +23,20 @@
 # define N_FOUND "minishell: command not found: "
 # define I_PWD "pwd: too many arguments"
 
-char	**init_environment(char **environ);
+typedef struct	s_envi
+{
+	char		*field;
+	char		*value;
+	struct s_envi	*next;
+}		t_envi;
+
+t_envi	*init_environment(char **environ);
+void	free_envi(t_envi *head);
+void	env(char *str, t_envi *head);
+void	unset_envi(char *str, t_envi **head);
+
 void	echo(char **arguments);
 void	pwd(char *str, char **environ);
-void	env(char *str, char **environ);
 void	command(char **commands, char **my_env);
 
 #endif
