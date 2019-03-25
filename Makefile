@@ -6,7 +6,7 @@
 #    By: lwyl-the <lwyl-the@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/20 10:25:27 by rgyles            #+#    #+#              #
-#    Updated: 2019/03/25 15:24:56 by rgyles           ###   ########.fr        #
+#    Updated: 2019/03/25 18:47:37 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ INCLUDES = -I includes -I libft
 SRC = main.c\
 	  init_environment.c\
 	  commands.c\
+	  env.c\
 	  echo.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
