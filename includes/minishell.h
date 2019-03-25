@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/20 16:12:51 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/25 17:30:19 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ char	**init_environment(char **environ);
 void	echo(char **arguments);
 void	pwd(char *str, char **environ);
 void	env(char *str, char **environ);
+void	command(char **commands, char **my_env);
 
 #endif

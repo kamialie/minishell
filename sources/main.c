@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/21 15:20:46 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/25 17:40:12 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ int		check_command(char **commands, char **my_env)
 		echo(commands + 1);
 	else if (ft_strequ(commands[0], "env"))
 		env(*(commands + 1), my_env);
-	else if (ft_strequ(commands[0], "pwd"))
-		pwd(*(commands + 1), my_env);
 	else
 	{
-		ft_putstr(N_FOUND);
-		ft_putendl(commands[0]);
+		command(commands, my_env);
+		//ft_putstr(N_FOUND);
+		//ft_putendl(commands[0]);
 	}
 	free_commands(commands);
 	return (0);
