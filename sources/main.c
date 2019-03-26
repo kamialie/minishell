@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 11:58:28 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/26 17:30:50 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int		check_command(char **commands, char ***envi)
 	else if (ft_strequ(commands[0], "env"))
 		print_envi(*(commands + 1), *envi);
 	else if (ft_strequ(commands[0], "setenv"))
-		*envi = set_envi(commands, *envi);
+		*envi = set_envi(commands + 1, *envi);
 	else if (ft_strequ(commands[0], "unsetenv"))
-		*envi = unset_envi(commands, *envi);
+		*envi = unset_envi(commands + 1, *envi);
 	else
 	{
 		//command(commands, my_env);
-		//ft_putstr(N_FOUND);
+		//ft_putstr(NF_COMMAND);
 		//ft_putendl(commands[0]);
 	}
 	if (*envi == NULL)

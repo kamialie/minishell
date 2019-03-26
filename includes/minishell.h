@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 11:50:07 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/26 17:31:55 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # define O_YELLOW "\033[01;33m"
 # define O_NC "\033[0m"
 
-# define N_FOUND "minishell: command not found: "
+# define NF_COMMAND "minishell: command not found: "
+# define NF_FOD  ": No such file or directory"
 
 char	**init_environment(char **environ);
 char	**get_envi_array(char **envi, int flag);

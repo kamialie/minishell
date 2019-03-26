@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:59:28 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 12:03:51 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/26 17:30:30 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,49 @@
 
 char	**set_envi(char **arguments, char **envi)
 {
-	int		i;
 	char	*field;
-	char	**my_env;
+	char	**new_envi;
+	char	**my_envi;
+	char	**old_envi;
 
-	i = 0;
+	old_envi = envi;
 	if (arguments[0] == NULL || arguments[1] == NULL || arguments[2] != NULL)
 		return (NULL);
 	field = ft_strjoin(*arguments, "=");
-	my_env = get_envi_array(envi, 1);
+	new_envi = get_envi_array(envi, 1);
+	my_envi = new_envi;
 	while (*envi != NULL)
-	{
-		my_env[i++] = ft_strdup(*envi);
-		++envi;
-	}
-	free_envi_array(envi);
-	*my_env = ft_strjoin(field, arguments[1]);
+		*new_envi++ = ft_strdup(*envi++);
+	free_envi_array(old_envi);
+	*new_envi++ = ft_strjoin(field, arguments[1]);
 	free(field);
-	my_env[i] = NULL;
-	return (my_env);
+	*new_envi = NULL;
+	return (my_envi);
 }
 
 char	**unset_envi(char **arguments, char **envi)
 {
-	int		i;
 	char	*field;
-	char	**my_env;
+	char	**new_envi;
+	char	**my_envi;
+	char	**old_envi;
 
-	i = 0;
+	old_envi = envi;
 	if (arguments[0] == NULL || arguments[1] != NULL)
 		return (NULL);
 	field = *arguments;
-	my_env = get_envi_array(envi, -1);
+	new_envi = get_envi_array(envi, -1);
+	my_envi = new_envi;
 	while (*envi != NULL)
 	{
 		if (ft_strstr(*envi, field) == NULL)
-			my_env[i++] = ft_strdup(*envi);
-		++envi;
+			*new_envi++ = ft_strdup(*envi++);
+		else
+			++envi;
 	}
-	free_envi_array(envi);
-	*my_env = NULL;
-	return (my_env);
+	free_envi_array(old_envi);
+	*new_envi = NULL;
+	return (my_envi);
 }
 
 void	print_envi(char *str, char **envi)
@@ -63,14 +65,9 @@ void	print_envi(char *str, char **envi)
 	{
 		ft_putstr("env: ");
 		ft_putstr(str);
-		ft_putendl(": No such file or directory");
+		ft_putendl(NF_FOD);
+		return ;
 	}
-	else
-	{
-		while (*envi != NULL)
-		{
-			ft_putendl(*envi);
-			++envi;
-		}
-	}
+	while (*envi != NULL)
+		ft_putendl(*envi++);
 }
