@@ -27,6 +27,7 @@ INCLUDES = -I includes -I libft
 SRC = main.c\
 	  init_environment.c\
 	  env_commands.c\
+	  change_direct.c\
 	  commands.c\
 	  echo.c
 

@@ -12,42 +12,42 @@
 
 #include "minishell.h"
 
-void	free_commands(char **commands)
+void	free_arguments(char **arguments)
 {
 	int		i;
 
 	i = -1;
-	while (commands[++i] != NULL)
-		free(commands[i]);
-	free(commands);
+	while (arguments[++i] != NULL)
+		free(arguments[i]);
+	free(arguments);
 }
 
-int		check_command(char **commands, char ***envi)
+int		check_command(char **arguments, char ***envi)
 {
-	if (ft_strequ(commands[0], "exit"))
+	if (ft_strequ(arguments[0], "exit"))
 	{
-		free_commands(commands);
+		free_arguments(arguments);
 		return (1);
 	}
-	else if (ft_strequ(commands[0], "echo"))
-		echo(commands + 1);
-	//else if (ft_strequ(commands[0], "cd"))
-		//cd(commands + 1);
-	else if (ft_strequ(commands[0], "env"))
-		print_envi(*(commands + 1), *envi);
-	else if (ft_strequ(commands[0], "setenv"))
-		*envi = set_envi(commands + 1, *envi);
-	else if (ft_strequ(commands[0], "unsetenv"))
-		*envi = unset_envi(commands + 1, *envi);
+	else if (ft_strequ(arguments[0], "echo"))
+		echo(arguments + 1);
+	else if (ft_strequ(arguments[0], "cd"))
+		*envi = change_direct(arguments + 1, *envi);
+	else if (ft_strequ(arguments[0], "env"))
+		print_envi(*(arguments + 1), *envi);
+	else if (ft_strequ(arguments[0], "setenv"))
+		*envi = set_envi(arguments + 1, *envi);
+	else if (ft_strequ(arguments[0], "unsetenv"))
+		*envi = unset_envi(arguments + 1, *envi);
 	else
 	{
-		//command(commands, my_env);
+		command(arguments, *envi);
 		//ft_putstr(NF_COMMAND);
-		//ft_putendl(commands[0]);
+		//ft_putendl(arguments[0]);
 	}
 	if (*envi == NULL)
 		ft_putendl("error while set/unset env variable");
-	free_commands(commands);
+	free_arguments(arguments);
 	return (0);
 }
 

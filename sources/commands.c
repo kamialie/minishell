@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	command(char **commands, char **my_env)
+void	command(char **arguments, char **envi)
 {
 	pid_t	childPID;
 
@@ -20,7 +20,7 @@ void	command(char **commands, char **my_env)
 	if (childPID >= 0)
 	{
 		if (childPID == 0)
-			execve("/bin/pwd", commands, my_env);
+			execve("/bin/pwd", arguments, envi);
 		else
 			wait(NULL);
 	}

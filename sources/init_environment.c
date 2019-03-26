@@ -25,6 +25,17 @@ void	free_envi_array(char **envi)
 	free(envi);
 }
 
+char	*get_envi_field(char *field, char **envi)
+{
+	while (*envi != NULL)
+	{
+		if (ft_strstr(*envi, field))
+			return (*envi);
+		++envi;
+	}
+	return (NULL);
+}
+
 char	**get_envi_array(char **envi, int flag)
 {
 	int		size;
@@ -36,7 +47,7 @@ char	**get_envi_array(char **envi, int flag)
 		++envi;
 		++size;
 	}
-	my_env = (char **)malloc(sizeof(*my_env) * (++size + flag));
+	my_env = (char **)malloc(sizeof(*my_env) * (++size + flag)); //initialize last cell to NULL
 	return (my_env);
 }
 
