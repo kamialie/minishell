@@ -6,92 +6,63 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 16:11:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/21 15:19:11 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/26 11:57:57 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		free_envi(t_envi *head)
+void	free_envi_array(char **envi)
 {
-	t_envi	*tmp;
+	int	i;
 
-	while (head != NULL)
+	i = 0;
+	while (envi[i] != NULL)
 	{
-		tmp = head;
-		head = head->next;
-		free(tmp);
+		free(envi[i]);
+		++i;
 	}
+	free(envi);
 }
 
-void		unset_envi(char *str, t_envi **head)
+char	**get_envi_array(char **envi, int flag)
 {
-	t_envi	*tmp;
-	t_envi	*current;
+	int		size;
+	char	**my_env;
 
-	current = *head;
-	if (ft_strstr(current->field, str))
+	size = 0;
+	while (*envi != NULL)
 	{
-		*head = (*head)->next;
-		free(current);
+		++envi;
+		++size;
 	}
-	else
-	{
-		tmp = current;
-		current = current->next;
-		while (current != NULL)
-		{
-			if (ft_strstr(current->field, str))
-			{
-				tmp->next = current->next;
-				return ;
-			}
-			tmp = current;
-			current = current->next;
-		}
-	}
+	my_env = (char **)malloc(sizeof(*my_env) * (++size + flag));
+	return (my_env);
 }
 
-static void	push_back_envi_field(t_envi **head, char *field, char *value)
+char	**init_environment(char **environ)
 {
-	t_envi	*new;
-	t_envi	*tmp;
+	int		i;
+	char	*lvl;
+	char	**my_env;
 
-	new = (t_envi *)malloc(sizeof(*new));
-	new->field = field;
-	new->value = value;
-	new->next = NULL;
-	if (*head == NULL)
-		*head = new;
-	else
-	{
-		tmp = *head;
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-}
-
-t_envi	*init_environment(char **environ)
-{
-	char	*p;
-	char	*field;
-	char	*value;
-	t_envi	*head;
-
-	head = NULL;
+	i = 0;
+	my_env = get_envi_array(environ, 0);
 	while (*environ != NULL)
 	{
-		p = ft_strchr(*environ, '=');
-		field = ft_strsub(*environ, 0, ++p - *environ);
 		if (ft_strstr(*environ, "SHELL"))
-			value = getcwd(NULL, 0); //need full path to binary
+			my_env[i] = getcwd(NULL, 0); //need full path to binary
 		else if (ft_strstr(*environ, "SHLVL"))
-			value = ft_itoa(ft_atoi(*environ + 6) + 1);
+		{
+			lvl = ft_itoa(ft_atoi(*environ + 6) + 1);
+			my_env[i] = ft_strjoin("SHLVL=", lvl);
+			free(lvl);
+		}
 		else
-			value = ft_strsub(p, 0, ft_strlen(p));
-		push_back_envi_field(&head, field, value);
+			my_env[i] = ft_strdup(*environ);
 		++environ;
+		++i;
 	}
-	return (head);
+	my_env[i] = NULL;
+	return (my_env);
 }

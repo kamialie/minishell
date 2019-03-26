@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/25 17:40:12 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/26 11:58:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_commands(char **commands)
 	free(commands);
 }
 
-int		check_command(char **commands, t_envi *head)
+int		check_command(char **commands, char ***envi)
 {
 	if (ft_strequ(commands[0], "exit"))
 	{
@@ -32,15 +32,19 @@ int		check_command(char **commands, t_envi *head)
 	else if (ft_strequ(commands[0], "echo"))
 		echo(commands + 1);
 	else if (ft_strequ(commands[0], "env"))
-		env(*(commands + 1), head);
+		print_envi(*(commands + 1), *envi);
+	else if (ft_strequ(commands[0], "setenv"))
+		*envi = set_envi(commands, *envi);
 	else if (ft_strequ(commands[0], "unsetenv"))
-		unset_envi(commands[1], &head);
+		*envi = unset_envi(commands, *envi);
 	else
 	{
 		//command(commands, my_env);
 		//ft_putstr(N_FOUND);
 		//ft_putendl(commands[0]);
 	}
+	if (*envi == NULL)
+		ft_putendl("error while set/unset env variable");
 	free_commands(commands);
 	return (0);
 }
@@ -50,7 +54,7 @@ int		main(int args, char **argv, char **environ)
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
 	char	*str;
-	t_envi	*my_env;
+	char	**my_env;
 
 	(void)args;
 	(void)argv;
@@ -60,9 +64,9 @@ int		main(int args, char **argv, char **environ)
 	{
 		buf[ret] = '\0';
 		str = ft_strtrim(buf);
-		if (*str != '\0' && check_command(ft_split_whitespaces(str), my_env))
+		if (*str != '\0' && check_command(ft_split_whitespaces(str), &my_env))
 		{
-			free_envi(my_env);
+			free_envi_array(my_env);
 			free(str);
 			return (0);
 		}

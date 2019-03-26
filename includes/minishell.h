@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/25 17:30:19 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/26 11:50:07 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,13 @@
 # define O_NC "\033[0m"
 
 # define N_FOUND "minishell: command not found: "
-# define I_PWD "pwd: too many arguments"
 
-typedef struct	s_envi
-{
-	char		*field;
-	char		*value;
-	struct s_envi	*next;
-}		t_envi;
-
-t_envi	*init_environment(char **environ);
-void	free_envi(t_envi *head);
-void	env(char *str, t_envi *head);
-void	unset_envi(char *str, t_envi **head);
+char	**init_environment(char **environ);
+char	**get_envi_array(char **envi, int flag);
+void	free_envi_array(char **envi);
+void	print_envi(char *str, char **envi);
+char	**set_envi(char **arguments, char **envi);
+char	**unset_envi(char **arguments, char **envi);
 
 void	echo(char **arguments);
 void	pwd(char *str, char **environ);
