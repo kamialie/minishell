@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 17:30:50 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/26 20:00:55 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		check_command(char **commands, char ***envi)
 	}
 	else if (ft_strequ(commands[0], "echo"))
 		echo(commands + 1);
+	//else if (ft_strequ(commands[0], "cd"))
+		//cd(commands + 1);
 	else if (ft_strequ(commands[0], "env"))
 		print_envi(*(commands + 1), *envi);
 	else if (ft_strequ(commands[0], "setenv"))

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 16:11:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 11:57:57 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/26 19:37:04 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,27 @@ char	**get_envi_array(char **envi, int flag)
 
 char	**init_environment(char **environ)
 {
-	int		i;
 	char	*lvl;
-	char	**my_env;
+	char	**new_envi;
+	char	**my_envi;
 
-	i = 0;
-	my_env = get_envi_array(environ, 0);
+	new_envi = get_envi_array(environ, 0);
+	my_envi = new_envi;
 	while (*environ != NULL)
 	{
 		if (ft_strstr(*environ, "SHELL"))
-			my_env[i] = getcwd(NULL, 0); //need full path to binary
+			*new_envi = getcwd(NULL, 0); //need full path to binary
 		else if (ft_strstr(*environ, "SHLVL"))
 		{
 			lvl = ft_itoa(ft_atoi(*environ + 6) + 1);
-			my_env[i] = ft_strjoin("SHLVL=", lvl);
+			*new_envi = ft_strjoin("SHLVL=", lvl);
 			free(lvl);
 		}
 		else
-			my_env[i] = ft_strdup(*environ);
+			*new_envi = ft_strdup(*environ);
+		++new_envi;
 		++environ;
-		++i;
 	}
-	my_env[i] = NULL;
-	return (my_env);
+	*new_envi = NULL;
+	return (my_envi);
 }
