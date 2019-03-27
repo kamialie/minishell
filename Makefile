@@ -6,7 +6,7 @@
 #    By: lwyl-the <lwyl-the@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/20 10:25:27 by rgyles            #+#    #+#              #
-#    Updated: 2019/03/26 11:59:51 by rgyles           ###   ########.fr        #
+#    Updated: 2019/03/27 11:05:52 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ INCLUDES = -I includes -I libft
 
 SRC = main.c\
 	  init_environment.c\
+	  init_arguments.c\
 	  env_commands.c\
 	  change_direct.c\
 	  commands.c\

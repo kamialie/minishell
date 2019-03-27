@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 17:31:55 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/27 11:07:35 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define NF_OLDPWD SHELL "cd: old pwd not found"
 
 # define ER_CD SHELL "cd: error"
+# define TM_CD SHELL "cd: too many arguments"
+
+char	**init_arguments(char *input);
 
 char	**init_environment(char **environ);
 char	**get_envi_array(char **envi, int flag);
@@ -37,7 +40,7 @@ void	print_envi(char *str, char **envi);
 char	**set_envi(char **arguments, char **envi);
 char	**unset_envi(char **arguments, char **envi);
 
-char	**change_direct(char **arguments, char **envi);
+void	change_direct(char **arguments, char ***envi);
 
 void	echo(char **arguments);
 void	command(char **arguments, char **envi);

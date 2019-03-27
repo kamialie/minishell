@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   change_direct.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/26 19:55:36 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 20:00:45 by rgyles           ###   ########.fr       */
+/*   Created: 2019/03/27 10:17:07 by rgyles            #+#    #+#             */
+/*   Updated: 2019/03/27 11:24:41 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ char	**update_envi(char **envi)
 	while (*envi != NULL)
 	{
 		if (find_envi_field(*envi, "PWD"))
-		{
-			old_pwd = ft_strdup(*envi + 4);
-			++envi;
-		}
+			old_pwd = ft_strdup(*envi++ + 4);
 		else if (find_envi_field(*envi, "OLDPWD"))
 			++envi;
 		else
@@ -73,24 +70,31 @@ char	**update_envi(char **envi)
 	return (new_envi);
 }
 
-char	**change_direct(char **arguments, char **envi)
+void	change_direct(char **arguments, char ***envi)
 {
-	int	check;
+	int		check;
 	char	*path;
 	
-	if (*arguments == NULL)
+	if (*arguments != NULL && *(arguments + 1) != NULL)
 	{
-		if ((path = get_envi_field("HOME", envi)) == NULL)
+		ft_putendl(TM_CD);
+		return ;
+	}
+	if (*arguments == NULL || ft_strequ(*arguments, "~"))
+	{
+		if ((path = get_envi_field("HOME", *envi)) == NULL)
 			ft_putendl(NF_HD);
 		else if ((check = chdir(path + 5)) != 0)
 			ft_putendl(ER_CD);
 	}
 	else if (ft_strequ(*arguments, "-"))
 	{
-		if ((path = get_envi_field("OLDPWD", envi)) == NULL)
+		if ((path = get_envi_field("OLDPWD", *envi)) == NULL)
 			ft_putendl(NF_OLDPWD);
 		else if ((check = chdir(path + 7)) != 0)
 			ft_putendl(ER_CD);
+		else
+			ft_putendl(path + 7);
 	}
-	return (update_envi(envi));
+	*envi = update_envi(*envi);
 }

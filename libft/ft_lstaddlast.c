@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 12:17:32 by rgyles            #+#    #+#             */
-/*   Updated: 2018/12/09 13:47:05 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/27 10:38:43 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_lstaddlast(t_list **alst, t_list *new)
 	t_list *cur;
 
 	cur = *alst;
+	if (new == NULL)
+		return ;
 	if (*alst == NULL)
 	{
 		*alst = new;

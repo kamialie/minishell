@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 20:00:55 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/27 11:13:57 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	free_arguments(char **arguments)
 
 int		check_command(char **arguments, char ***envi)
 {
+	//while (*arguments != NULL)
+	//{
+		//ft_putendl(*arguments);
+		//++arguments;
+	//}
 	if (ft_strequ(arguments[0], "exit"))
 	{
 		free_arguments(arguments);
@@ -32,7 +37,7 @@ int		check_command(char **arguments, char ***envi)
 	else if (ft_strequ(arguments[0], "echo"))
 		echo(arguments + 1);
 	else if (ft_strequ(arguments[0], "cd"))
-		*envi = change_direct(arguments + 1, *envi);
+		change_direct(arguments + 1, envi);
 	else if (ft_strequ(arguments[0], "env"))
 		print_envi(*(arguments + 1), *envi);
 	else if (ft_strequ(arguments[0], "setenv"))
@@ -66,7 +71,7 @@ int		main(int args, char **argv, char **environ)
 	{
 		buf[ret] = '\0';
 		str = ft_strtrim(buf);
-		if (*str != '\0' && check_command(ft_split_whitespaces(str), &my_env))
+		if (*str != '\0' && check_command(init_arguments(str), &my_env))
 		{
 			free_envi_array(my_env);
 			free(str);
