@@ -6,11 +6,21 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/27 11:13:57 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/28 16:31:18 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_envi_array(char **envi)
+{
+	int	i;
+
+	i = -1;
+	while (envi[++i] != NULL)
+		free(envi[i]);
+	free(envi);
+}
 
 void	free_arguments(char **arguments)
 {

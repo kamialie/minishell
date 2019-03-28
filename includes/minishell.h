@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/27 11:07:35 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/28 16:33:54 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,36 @@
 
 # include "libft.h"
 # include <fcntl.h>
+# include <sys/stat.h>
 # include <stdio.h>
 
 # define O_YELLOW "\033[01;33m"
 # define O_NC "\033[0m"
 
 # define SHELL "minishell: "
+# define CD "cd: "
+
 # define NF_COMMAND SHELL "command not found: "
-# define NF_FOD ": No such file or directory"
+# define NF_FOD "no such file or directory: "
 
-# define NF_HD SHELL "cd: home directory not found"
-# define NF_OLDPWD SHELL "cd: old pwd not found"
+# define NF_HD_CD CD "home directory not found"
+# define NF_OLDPWD_CD CD "old pwd not found"
+# define NF_FOD_CD CD NF_FOD
 
-# define ER_CD SHELL "cd: error"
-# define TM_CD SHELL "cd: too many arguments"
+# define ER_CD CD "error"
+# define ND_CD CD "not a directory: "
+# define TMA_CD CD "too many arguments"
 
 char	**init_arguments(char *input);
 
 char	**init_environment(char **environ);
 char	**get_envi_array(char **envi, int flag);
-char	*get_envi_field(char *field, char **envi);
 void	free_envi_array(char **envi);
 void	print_envi(char *str, char **envi);
 char	**set_envi(char **arguments, char **envi);
 char	**unset_envi(char **arguments, char **envi);
+char	*get_envi_field(char *field, char **envi);
+void	update_envi_field(char *field, char *new_line, char ***envi);
 
 void	change_direct(char **arguments, char ***envi);
 

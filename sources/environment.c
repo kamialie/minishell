@@ -1,39 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_environment.c                                 :+:      :+:    :+:   */
+/*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/20 16:11:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 19:37:04 by rgyles           ###   ########.fr       */
+/*   Created: 2019/03/27 12:38:47 by rgyles            #+#    #+#             */
+/*   Updated: 2019/03/28 18:25:23 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_envi_array(char **envi)
+int	find_envi_field(char *line, char *field)
 {
 	int	i;
 
 	i = 0;
-	while (envi[i] != NULL)
-	{
-		free(envi[i]);
-		++i;
-	}
-	free(envi);
+	while (line[i] == field[i])
+		i++;
+	if (field[i] == '\0' && line[i] == '=')
+		return (1);
+	return (0);
 }
 
 char	*get_envi_field(char *field, char **envi)
 {
 	while (*envi != NULL)
 	{
-		if (ft_strstr(*envi, field))
+		if (find_envi_field(*envi, field))
 			return (*envi);
 		++envi;
 	}
 	return (NULL);
+}
+
+void	update_envi_field(char *field, char *new_line, char ***envi)
+{
+	char	**new_envi;
+
+	new_envi = *envi;
+	while (*new_envi != NULL)
+	{
+		if (find_envi_field(*new_envi, field))
+		{
+			free(*new_envi);
+			*new_envi = new_line;
+			return ;
+		}
+		++new_envi;
+	}
 }
 
 char	**get_envi_array(char **envi, int flag)
@@ -42,11 +58,8 @@ char	**get_envi_array(char **envi, int flag)
 	char	**my_env;
 
 	size = 0;
-	while (*envi != NULL)
-	{
-		++envi;
+	while (*envi++ != NULL)
 		++size;
-	}
 	my_env = (char **)malloc(sizeof(*my_env) * (++size + flag)); //initialize last cell to NULL
 	return (my_env);
 }
