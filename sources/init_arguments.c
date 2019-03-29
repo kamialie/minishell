@@ -12,6 +12,21 @@
 
 #include "minishell.h"
 
+char	*check_argument(char *argument)
+{
+	char	*str;
+
+	if (*argument == '$')
+	{
+		if ((str = get_envi_field(*argument + 1, envi)))
+			str = ft_strdup(str);
+		else
+			str = ft_strnew(1);
+		free(argument);
+	}
+	return (argument);
+}
+
 static t_list	*get_words(char *input)
 {
 	int		size;
@@ -36,18 +51,6 @@ static t_list	*get_words(char *input)
 	return (head);
 }
 
-static void	free_list(t_list *head)
-{
-	t_list	*tmp;
-
-	while (head != NULL)
-	{
-		tmp = head;
-		head = head->next;
-		free(tmp);
-	}
-}
-
 char	**init_arguments(char *input)
 {
 	int		i;
@@ -57,14 +60,14 @@ char	**init_arguments(char *input)
 
 	head = get_words(input);
 	arguments = (char **)malloc(sizeof(*arguments) * (ft_lstcount(head) + 1));
-	tmp = head;
 	i = -1;
-	while (tmp != NULL)
+	while (head != NULL)
 	{
-		arguments[++i] = tmp->content;
-		tmp = tmp->next;
+		arguments[++i] = head->content;
+		tmp = head;
+		head = head->next;
+		free(tmp);
 	}
-	free_list(head);
 	arguments[++i] = NULL;
 	return (arguments);
 }

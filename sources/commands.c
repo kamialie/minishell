@@ -17,11 +17,9 @@ char	*find_binary(char *command, t_bin *bins)
 	char	*fbp;
 	char	**folder;
 
-	//printf("check\n");
 	while (bins != NULL)
 	{
 		folder = bins->bins;
-		//printf("folder - %s\n", bins->dir);
 		while (*folder != NULL)
 		{
 			if (ft_strequ(*folder++, command))
@@ -40,7 +38,6 @@ void	command(char **arguments, char **envi, t_bin *bins)
 	char	*fbp;
 	pid_t	childPID;
 
-	//(void)envi;
 	fbp = find_binary(*arguments, bins);
 	if (fbp == NULL)
 	{
@@ -49,7 +46,6 @@ void	command(char **arguments, char **envi, t_bin *bins)
 	}
 	else
 	{
-		printf("opa opa - %s\n", fbp);
 		childPID = fork();
 		if (childPID >= 0)
 		{

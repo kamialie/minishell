@@ -25,16 +25,16 @@
 # define SHELL "minishell: "
 # define CD "cd: "
 
-# define NF_COMMAND SHELL "command not found: "
-# define NF_FOD "no such file or directory: "
+# define NF_COMMAND SHELL "I've been looking, but couldn't find: "
+# define NF_FOD "you kidding? no such file or directory: "
 
-# define NF_HD_CD CD "home directory not found"
-# define NF_OLDPWD_CD CD "old pwd not found"
+# define NF_HD_CD CD "what have you done to my home directory path?"
+# define NF_OLDPWD_CD CD "old pwd 404"
 # define NF_FOD_CD CD NF_FOD
 
 # define ER_CD CD "error"
-# define ND_CD CD "not a directory: "
-# define TMA_CD CD "too many arguments"
+# define ND_CD CD "it's not a directory, honey: "
+# define TMA_CD CD "that's way too much than I can handle"
 
 typedef struct	s_bin
 {

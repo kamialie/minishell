@@ -14,11 +14,6 @@
 
 int		check_command(char **arguments, char ***envi, t_bin *bins)
 {
-	//while (*arguments != NULL)
-	//{
-		//ft_putendl(*arguments);
-		//++arguments;
-	//}
 	if (ft_strequ(arguments[0], "exit"))
 	{
 		free_arguments(arguments);
@@ -35,11 +30,7 @@ int		check_command(char **arguments, char ***envi, t_bin *bins)
 	else if (ft_strequ(arguments[0], "unsetenv"))
 		*envi = unset_envi(arguments + 1, *envi);
 	else
-	{
 		command(arguments, *envi, bins);
-		//ft_putstr(NF_COMMAND);
-		//ft_putendl(arguments[0]);
-	}
 	if (*envi == NULL)
 		ft_putendl("error while set/unset env variable");
 	free_arguments(arguments);
@@ -53,8 +44,6 @@ int		main(int args, char **argv, char **environ)
 	char	*str;
 	char	**my_envi;
 	t_bin	*bins;
-	//t_bin	*head;
-	//int		i;
 
 	(void)args;
 	(void)argv;

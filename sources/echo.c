@@ -14,11 +14,22 @@
 
 void	echo(char **arguments)
 {
+	int	flag;
+
+	flag = 1;
+	if (ft_strequ(*arguments, "-n"))
+	{
+		flag = 0;
+		++arguments;
+	}
 	while (*arguments != NULL)
 	{
 		ft_putstr(*arguments);
 		write(1, " ", 1);
 		arguments++;
 	}
-	write(1, "\n", 1);
+	if (flag)
+		write(1, "\n", 1);
+	else
+		ft_putchar(14);
 }
