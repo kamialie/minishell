@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swapuni.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_mid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/01 14:42:26 by rgyles            #+#    #+#             */
-/*   Updated: 2018/12/02 19:12:46 by rgyles           ###   ########.fr       */
+/*   Created: 2019/03/29 13:16:23 by rgyles            #+#    #+#             */
+/*   Updated: 2019/03/29 14:15:31 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_swapuni(void *a, void *b)
+char	*ft_strjoin_mid(char *s1, char *s2, char c)
 {
-	size_t	size;
-	void	*tmp_b;
+	char	*line;
+	char	*new;
 
-	size = sizeof(a);
-	if (!(tmp_b = malloc(size)))
-	{
-		ft_putstr("sorting not performed: allocation failed");
-		exit(0);
-	}
-	ft_memmove(tmp_b, b, size);
-	ft_memmove(b, a, size);
-	ft_memmove(a, tmp_b, size);
-	free(tmp_b);
+	new = (char *)malloc(sizeof(*line) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	line = new;
+	while (*s1 != '\0')
+		*new++ = *s1++;
+	*new++ = c;
+	while (*s2 != '\0')
+		*new++ = *s2++;
+	*new = '\0';
+	return (line);
 }

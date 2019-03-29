@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/28 16:33:54 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/29 14:10:06 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <stdio.h>
+# include <dirent.h>
 
 # define O_YELLOW "\033[01;33m"
 # define O_NC "\033[0m"
@@ -35,6 +36,13 @@
 # define ND_CD CD "not a directory: "
 # define TMA_CD CD "too many arguments"
 
+typedef struct	s_bin
+{
+	char			*dir;
+	char			**bins;
+	struct s_bin	*next;
+}				t_bin;
+
 char	**init_arguments(char *input);
 
 char	**init_environment(char **environ);
@@ -45,6 +53,8 @@ char	**set_envi(char **arguments, char **envi);
 char	**unset_envi(char **arguments, char **envi);
 char	*get_envi_field(char *field, char **envi);
 void	update_envi_field(char *field, char *new_line, char ***envi);
+
+t_bin	*init_binaries(char *path);
 
 void	change_direct(char **arguments, char ***envi);
 

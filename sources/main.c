@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/28 16:31:18 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/29 14:38:43 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,21 @@ int		main(int args, char **argv, char **environ)
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
 	char	*str;
-	char	**my_env;
+	char	**my_envi;
+	t_bin	*bins;
 
 	(void)args;
 	(void)argv;
-	my_env = init_environment(environ);
+	my_envi = init_environment(environ);
+	bins = init_binaries(get_envi_field("PATH", my_envi) + 5);
 	ft_putstr(O_YELLOW "minishell " O_NC);
 	while ((ret = read(0, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
 		str = ft_strtrim(buf);
-		if (*str != '\0' && check_command(init_arguments(str), &my_env))
+		if (*str != '\0' && check_command(init_arguments(str), &my_envi))
 		{
-			free_envi_array(my_env);
+			free_envi_array(my_envi);
 			free(str);
 			return (0);
 		}

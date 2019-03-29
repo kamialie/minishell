@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envi_support.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/29 12:19:54 by rgyles            #+#    #+#             */
+/*   Updated: 2019/03/29 14:08:41 by rgyles           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*join_envi_line(char *field, char *value)
@@ -16,7 +28,7 @@ char	*join_envi_line(char *field, char *value)
 	return (line);
 }
 
-int	find_envi_field(char *line, char *field)
+int	confirm_envi_field(char *line, char *field)
 {
 	int	i;
 
@@ -32,7 +44,7 @@ char	*get_envi_field(char *field, char **envi)
 {
 	while (*envi != NULL)
 	{
-		if (find_envi_field(*envi, field))
+		if (confirm_envi_field(*envi, field))
 			return (*envi);
 		++envi;
 	}
@@ -46,7 +58,7 @@ void	update_envi_field(char *field, char *new_line, char ***envi)
 	new_envi = *envi;
 	while (*new_envi != NULL)
 	{
-		if (find_envi_field(*new_envi, field))
+		if (confirm_envi_field(*new_envi, field))
 		{
 			free(*new_envi);
 			*new_envi = new_line;

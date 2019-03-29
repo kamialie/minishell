@@ -6,7 +6,7 @@
 #    By: rgyles <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 16:13:15 by rgyles            #+#    #+#              #
-#    Updated: 2019/03/20 13:14:12 by rgyles           ###   ########.fr        #
+#    Updated: 2019/03/29 13:17:54 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRC = ft_strlen.c\
 	  ft_strsub.c\
 	  ft_strcsub.c\
 	  ft_strjoin.c\
+	  ft_strjoin_mid.c\
 	  ft_strtrim.c\
 	  ft_strsplit.c\
 	  ft_split_whitespaces.c\
@@ -76,8 +77,6 @@ SRC = ft_strlen.c\
 	  ft_lstcount.c\
 	  ft_lstiter.c\
 	  ft_lstmap.c\
-	  ft_swapuni.c\
-	  ft_qsort.c\
 	  ft_realloc.c\
 	  get_next_line.c
 

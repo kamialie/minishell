@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 16:23:23 by rgyles            #+#    #+#             */
-/*   Updated: 2018/12/02 18:42:24 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/29 13:35:24 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_list		*ft_lstnew(void const *content, size_t content_size)
 {
 	t_list	*p;
 
-	p = NULL;
 	if (!(p = (t_list *)malloc(sizeof(*p))))
 		return (NULL);
 	p->content = ft_write_word((char*)content, content_size);

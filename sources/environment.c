@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:38:47 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/28 18:25:23 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/29 12:16:12 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**init_environment(char **environ)
 	char	**new_envi;
 	char	**my_envi;
 
-	new_envi = get_envi_array(environ, 0);
+	new_envi = get_envi_array(environ, 1);
 	my_envi = new_envi;
 	while (*environ != NULL)
 	{
@@ -47,6 +47,7 @@ char	**init_environment(char **environ)
 		++new_envi;
 		++environ;
 	}
+	*new_envi++ = ft_strdup("POLYANA=PrivetMoyDorogoyDrug");
 	*new_envi = NULL;
 	return (my_envi);
 }

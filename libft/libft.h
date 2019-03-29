@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 16:12:31 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/20 13:29:18 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/29 14:07:48 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int				ft_strnequ(char const *s1, char const *s2, size_t n);
 char			*ft_strsub(char const *s, unsigned int start, size_t len);
 char			*ft_strcsub(char const *s, int c);
 char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_strjoin_mid(char *s1, char *s2, char c);
 char			*ft_strtrim(char const *s);
 char			**ft_strsplit(char const *s, char c);
 char			**ft_split_whitespaces(char *s);
@@ -89,8 +90,6 @@ void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void			ft_lstadd(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-void			ft_swap(void *a, void *b);
-void			ft_qsort(int *array, int start, int end);
 void			*ft_realloc(void *ptr, size_t size);
 void			ft_lstaddlast(t_list **alst, t_list *new);
 int				ft_lstcount(t_list *begin_list);

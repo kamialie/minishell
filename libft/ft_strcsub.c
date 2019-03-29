@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/25 12:45:28 by rgyles            #+#    #+#             */
-/*   Updated: 2018/12/02 18:44:12 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/29 14:37:03 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ char	*ft_strcsub(char const *s, int c)
 		return (ft_strdup(s));
 	if (!(str = (char *)malloc(sizeof(*str) * (p - s + 1))))
 		return (NULL);
+	p = str;
 	while (*s != c)
-		*str++ = *s++;
-	*str = '\0';
+		*p++ = *s++;
+	*p = '\0';
 	return (str);
 }
