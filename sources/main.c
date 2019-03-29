@@ -6,33 +6,13 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/29 14:38:43 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/29 19:16:04 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_envi_array(char **envi)
-{
-	int	i;
-
-	i = -1;
-	while (envi[++i] != NULL)
-		free(envi[i]);
-	free(envi);
-}
-
-void	free_arguments(char **arguments)
-{
-	int		i;
-
-	i = -1;
-	while (arguments[++i] != NULL)
-		free(arguments[i]);
-	free(arguments);
-}
-
-int		check_command(char **arguments, char ***envi)
+int		check_command(char **arguments, char ***envi, t_bin *bins)
 {
 	//while (*arguments != NULL)
 	//{
@@ -56,7 +36,7 @@ int		check_command(char **arguments, char ***envi)
 		*envi = unset_envi(arguments + 1, *envi);
 	else
 	{
-		command(arguments, *envi);
+		command(arguments, *envi, bins);
 		//ft_putstr(NF_COMMAND);
 		//ft_putendl(arguments[0]);
 	}
@@ -73,17 +53,33 @@ int		main(int args, char **argv, char **environ)
 	char	*str;
 	char	**my_envi;
 	t_bin	*bins;
+	//t_bin	*head;
+	//int		i;
 
 	(void)args;
 	(void)argv;
 	my_envi = init_environment(environ);
 	bins = init_binaries(get_envi_field("PATH", my_envi) + 5);
+	//TMP OUTPUT
+	//head = bins;
+	//while (head != NULL)
+	//{
+		//i = 0;
+		//printf("dir - %s\n\n", head->dir);
+		//while (head->bins[i] != NULL)
+		//{
+			//printf("binary  - %s\n", head->bins[i]);
+			//++i;
+		//}
+		//head = head->next;
+	//}
+	//END
 	ft_putstr(O_YELLOW "minishell " O_NC);
 	while ((ret = read(0, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
 		str = ft_strtrim(buf);
-		if (*str != '\0' && check_command(init_arguments(str), &my_envi))
+		if (*str != '\0' && check_command(init_arguments(str), &my_envi, bins))
 		{
 			free_envi_array(my_envi);
 			free(str);

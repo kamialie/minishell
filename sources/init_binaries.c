@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:22:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/29 14:51:15 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/29 18:58:34 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**get_binaries(char *dir_path)
 	while ((file = readdir(dir)))
 	{
 		file_path = ft_strjoin_mid(dir_path, file->d_name, '/');
-		if (access(file_path, X_OK) == 0)
+		if (access(file_path, X_OK) == 0 && *file->d_name != '.')
 			ft_lstadd(&head, ft_lstnew(file->d_name, ft_strlen(file->d_name)));
 	}
 	closedir(dir);
@@ -72,8 +72,9 @@ t_bin	*get_new_bin(char *dir_path)
 	if (access(dir_path, F_OK) == 0)
 	{
 		new = (t_bin *)malloc(sizeof(*new));
+		new->dir = dir_path;
 		new->bins = get_binaries(dir_path);
-		printf("binary - %s\n", new->bins[0]);
+		//printf("binary - %s\n", new->bins[0]);
 		new->next = NULL;
 		return (new);
 	}
@@ -99,5 +100,5 @@ t_bin	*init_binaries(char *path)
 		//printf("%s\n", dir_path);
 		path += ft_strlen(dir_path) + 1;
 	}
-	return (NULL);
+	return (head);
 }

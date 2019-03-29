@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/29 14:10:06 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/03/29 16:53:17 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ t_bin	*init_binaries(char *path);
 void	change_direct(char **arguments, char ***envi);
 
 void	echo(char **arguments);
-void	command(char **arguments, char **envi);
+void	command(char **arguments, char **envi, t_bin *bins);
+
+void	free_envi_array(char **envi);
+void	free_arguments(char **arguments);
 
 #endif
