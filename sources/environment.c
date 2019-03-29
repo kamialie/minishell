@@ -12,46 +12,6 @@
 
 #include "minishell.h"
 
-int	find_envi_field(char *line, char *field)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] == field[i])
-		i++;
-	if (field[i] == '\0' && line[i] == '=')
-		return (1);
-	return (0);
-}
-
-char	*get_envi_field(char *field, char **envi)
-{
-	while (*envi != NULL)
-	{
-		if (find_envi_field(*envi, field))
-			return (*envi);
-		++envi;
-	}
-	return (NULL);
-}
-
-void	update_envi_field(char *field, char *new_line, char ***envi)
-{
-	char	**new_envi;
-
-	new_envi = *envi;
-	while (*new_envi != NULL)
-	{
-		if (find_envi_field(*new_envi, field))
-		{
-			free(*new_envi);
-			*new_envi = new_line;
-			return ;
-		}
-		++new_envi;
-	}
-}
-
 char	**get_envi_array(char **envi, int flag)
 {
 	int		size;
