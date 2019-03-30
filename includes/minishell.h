@@ -43,22 +43,22 @@ typedef struct	s_bin
 	struct s_bin	*next;
 }				t_bin;
 
-char	**init_arguments(char *input);
-
 char	**init_environment(char **environ);
 char	**get_envi_array(char **envi, int flag);
 void	free_envi_array(char **envi);
 void	print_envi(char *str, char **envi);
-char	**set_envi(char **arguments, char **envi);
-char	**unset_envi(char **arguments, char **envi);
 char	*get_envi_field(char *field, char **envi);
 void	update_envi_field(char *field, char *new_line, char ***envi);
 
 t_bin	*init_binaries(char *path);
 
-void	change_direct(char **arguments, char ***envi);
+char	**init_arguments(char *input, char **envi);
 
+char	**set_envi(char **arguments, char **envi);
+char	**unset_envi(char **arguments, char **envi);
+void	change_direct(char **arguments, char ***envi);
 void	echo(char **arguments);
+
 void	command(char **arguments, char **envi, t_bin *bins);
 
 void	free_envi_array(char **envi);

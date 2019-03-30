@@ -68,7 +68,7 @@ int		main(int args, char **argv, char **environ)
 	{
 		buf[ret] = '\0';
 		str = ft_strtrim(buf);
-		if (*str != '\0' && check_command(init_arguments(str), &my_envi, bins))
+		if (*str != '\0' && check_command(init_arguments(str, my_envi), &my_envi, bins))
 		{
 			free_envi_array(my_envi);
 			free(str);

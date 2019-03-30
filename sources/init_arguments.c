@@ -12,25 +12,28 @@
 
 #include "minishell.h"
 
-char	*check_argument(char *argument)
+char	*check_argument(char *argument, char **envi)
 {
 	char	*str;
 
+	//printf("argument - %s\n", argument);
 	if (*argument == '$')
 	{
-		if ((str = get_envi_field(*argument + 1, envi)))
-			str = ft_strdup(str);
+		if ((str = get_envi_field(argument + 1, envi)))
+			str = ft_strdup(ft_strchr(str, '=') + 1);
 		else
 			str = ft_strnew(1);
 		free(argument);
+		return (str);
 	}
 	return (argument);
 }
 
-static t_list	*get_words(char *input)
+static t_list	*get_words(char *input, char **envi)
 {
 	int		size;
 	char	c;
+	char	*str;
 	t_list	*head;
 
 	head = NULL;
@@ -45,20 +48,22 @@ static t_list	*get_words(char *input)
 		c = input[size];
 		while (c != ' ' && c != '\0' && c != '\n' && c != '\t')
 			c = input[++size];
-		ft_lstaddlast(&head, ft_lstnew(input, size));
+		str = ft_strsub(input, 0, size);
+		str = check_argument(str, envi);
+		ft_lstaddlast(&head, ft_lstnew(str, ft_strlen(str)));
 		input += size;
 	}
 	return (head);
 }
 
-char	**init_arguments(char *input)
+char	**init_arguments(char *input, char **envi)
 {
 	int		i;
 	char	**arguments;
 	t_list	*head;
 	t_list	*tmp;
 
-	head = get_words(input);
+	head = get_words(input, envi);
 	arguments = (char **)malloc(sizeof(*arguments) * (ft_lstcount(head) + 1));
 	i = -1;
 	while (head != NULL)
