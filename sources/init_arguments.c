@@ -12,23 +12,6 @@
 
 #include "minishell.h"
 
-char	*check_argument(char *argument, char **envi)
-{
-	char	*str;
-
-	//printf("argument - %s\n", argument);
-	if (*argument == '$')
-	{
-		if ((str = get_envi_field(argument + 1, envi)))
-			str = ft_strdup(ft_strchr(str, '=') + 1);
-		else
-			str = ft_strnew(1);
-		free(argument);
-		return (str);
-	}
-	return (argument);
-}
-
 static t_list	*get_words(char *input, char **envi)
 {
 	int		size;
