@@ -28,6 +28,7 @@ SRC = main.c\
 	  environment.c\
 	  init_binaries.c\
 	  init_arguments.c\
+	  check_argument.c\
 	  envi_support.c\
 	  env_commands.c\
 	  change_direct.c\

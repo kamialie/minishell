@@ -41,7 +41,7 @@ typedef struct	s_bin
 	char			*dir;
 	char			**bins;
 	struct s_bin	*next;
-}				t_bin;
+}		t_bin;
 
 char	**init_environment(char **environ);
 char	**get_envi_array(char **envi, int flag);
@@ -53,6 +53,7 @@ void	update_envi_field(char *field, char *new_line, char ***envi);
 t_bin	*init_binaries(char *path);
 
 char	**init_arguments(char *input, char **envi);
+char	*check_argument(char *argument, char **envi);
 
 char	**set_envi(char **arguments, char **envi);
 char	**unset_envi(char **arguments, char **envi);

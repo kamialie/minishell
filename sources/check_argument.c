@@ -53,24 +53,49 @@ char	*cancat_arg(t_list *head)
 char	*check_argument(char *argument, char **envi)
 {
 	int	i;
-	char	*field;
+	char	*value;
 	t_list	*head;
 
-	i = -1;
+	i = 0;
 	head = NULL;
-	if (argument[i] == '~' && (argument[i] == '\0' || argument[i] == '/'
-			|| (argument[i] == '$' && argument[i + 1] != '\0')))
-		ft_lstaddlast(&head, ft_lstnew(
-	if ((value = get_envi_field(field, envi)) != NULL)
-	while (argument[++i] != '\0')
+	if (argument[i] == '~' && (argument[i + 1] == '\0' || argument[i + 1] == '/'
+			|| (argument[i + 1] == '$' && argument[i + 2] != '\0')))
+	{
+		if ((value = get_envi_field("HOME", envi)) != NULL)
+			ft_lstaddlast(&head, ft_lstnew(value + 5, ft_strlen(value + 5)));
+		++argument;
+	}
+	while (argument[i] != '\0')
 	{
 		if (argument[i] == '$')
 		{
 			ft_lstaddlast(&head, ft_lstnew(argument, i));
 			ft_lstaddlast(&head, sub_envi_var(argument + i + 1, envi));
 		}
+		++i;
 	}
 	if (head)
 		return (cancat_arg(head));
 	return (argument);
 }
+
+char	*check_argument(char *argument, char **envi)
+{
+	int	i;
+	char	*value;
+	t_list	*head;
+
+	if (*argument != '~' && ft_strchr(argument, '$') == NULL)
+		return (argument);
+	i = 0;
+	head = NULL;
+	if (*argument == '~' && (*argument + 1 == '\0' || *argument + 1 == '/'
+			|| (*argument + 1 == '$' && *argument + 2 != '\0')))
+	{
+		if ((value = get_envi_field("HOME", envi)) != NULL)
+			ft_lstaddlast(&head, ft_lstnew(value + 5, ft_strlen(value + 5)));
+		++argument;
+	}
+	while (argument[i] != '\0')
+	{
+
