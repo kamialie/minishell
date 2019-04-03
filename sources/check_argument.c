@@ -1,25 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_argument.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/03 18:30:54 by rgyles            #+#    #+#             */
+/*   Updated: 2019/04/03 20:25:56 by rgyles           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static t_list	*sub_envi_var(char *argument, char **envi)
+static char	*get_envi_value(char **argument, char **envi)
 {
 	int	len;
+	char	*p;
 	char	*field;
 	char	*value;
-	t_list	*new;
 
 	len = 0;
-	while (ft_isalnum(argument[len]))
+	p = *argument;
+	while (ft_isalnum(p[len]))
 		++len;
-	field = ft_strsub(argument, 0, len);
+	field = ft_strsub(p, 0, len);
+	*argument = p + len;
 	if ((value = get_envi_field(field, envi)) != NULL)
 	{
 		value = ft_strchr(value, '=') + 1;
-		new = ft_lstnew(value, ft_strlen(value));
+		value = ft_strdup(value);
 	}
 	else
-		new = ft_lstnew("", 1);
-	free(field);
-	return (new);
+		value = ft_strnew(1);
+	return (value);
 }
 
 char	*cancat_arg(t_list *head)
@@ -50,7 +63,7 @@ char	*cancat_arg(t_list *head)
 	return (argument);
 }
 
-char	*check_argument(char *argument, char **envi)
+/*char	*check_argument(char *argument, char **envi)
 {
 	int	i;
 	char	*value;
@@ -77,25 +90,47 @@ char	*check_argument(char *argument, char **envi)
 	if (head)
 		return (cancat_arg(head));
 	return (argument);
-}
+}*/
 
 char	*check_argument(char *argument, char **envi)
 {
-	int	i;
+	char	*p;
+	char	*str;
 	char	*value;
+	char	*home;
 	t_list	*head;
 
-	if (*argument != '~' && ft_strchr(argument, '$') == NULL)
-		return (argument);
-	i = 0;
 	head = NULL;
-	if (*argument == '~' && (*argument + 1 == '\0' || *argument + 1 == '/'
-			|| (*argument + 1 == '$' && *argument + 2 != '\0')))
+	str = argument;
+	while ((p = ft_strchr(argument, '$')) != NULL)
 	{
-		if ((value = get_envi_field("HOME", envi)) != NULL)
-			ft_lstaddlast(&head, ft_lstnew(value + 5, ft_strlen(value + 5)));
-		++argument;
+		if (p != argument)
+			ft_lstaddlast(&head, ft_lstnew(argument, p - argument));
+		++p;
+		value = get_envi_value(&p, envi);
+		ft_lstaddlast(&head, ft_lstnew(value, ft_strlen(value)));
+		argument = p;
+		if (*value == '\0')
+			break ;
 	}
-	while (argument[i] != '\0')
+	if (head != NULL)
 	{
+		if (*argument != '\0')
+			ft_lstaddlast(&head, ft_lstnew(argument, ft_strlen(argument)));
+		free(str);
+		argument = cancat_arg(head);
+	}
+	if (*argument == '~')
+	{
+		argument++;
+		if (*argument != '\0' && *argument != '/')
+		{
 
+		}
+		home = get_envi_field("HOME", envi);
+		str = ft_strjoin(home + 5, argument + 1);
+		free(argument);
+		argument = str;
+	}
+	return (argument);
+}
