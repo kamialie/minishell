@@ -125,7 +125,8 @@ char	*check_argument(char *argument, char **envi)
 		argument++;
 		if (*argument != '\0' && *argument != '/')
 		{
-
+			free(argument);
+			return (NULL);
 		}
 		home = get_envi_field("HOME", envi);
 		str = ft_strjoin(home + 5, argument + 1);

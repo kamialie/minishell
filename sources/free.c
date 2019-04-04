@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+void	free_struct(void *content, size_t len)
+{
+	free(content);
+	len = 0;
+}
+
 void	free_envi_array(char **envi)
 {
 	int	i;

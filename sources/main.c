@@ -14,6 +14,8 @@
 
 int		check_command(char **arguments, char ***envi, t_bin *bins)
 {
+	if (arguments == NULL)
+		ft_putendl("no such user or named directory");
 	if (ft_strequ(arguments[0], "exit"))
 	{
 		free_arguments(arguments);

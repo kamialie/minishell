@@ -32,7 +32,11 @@ static t_list	*get_words(char *input, char **envi)
 		while (c != ' ' && c != '\0' && c != '\n' && c != '\t')
 			c = input[++size];
 		str = ft_strsub(input, 0, size);
-		str = check_argument(str, envi);
+		if ((str = check_argument(str, envi)) == NULL)
+		{
+			ft_lstdel(&head, &free);
+			return (NULL);
+		}
 		ft_lstaddlast(&head, ft_lstnew(str, ft_strlen(str)));
 		input += size;
 	}
@@ -46,7 +50,8 @@ char	**init_arguments(char *input, char **envi)
 	t_list	*head;
 	t_list	*tmp;
 
-	head = get_words(input, envi);
+	if ((head = get_words(input, envi)) == NULL)
+		return (NULL);
 	arguments = (char **)malloc(sizeof(*arguments) * (ft_lstcount(head) + 1));
 	i = -1;
 	while (head != NULL)

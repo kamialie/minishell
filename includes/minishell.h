@@ -62,6 +62,7 @@ void	echo(char **arguments);
 
 void	command(char **arguments, char **envi, t_bin *bins);
 
+void	free_struct(void *content, size_t len);
 void	free_envi_array(char **envi);
 void	free_arguments(char **arguments);
 
