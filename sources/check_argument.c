@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/03 20:25:56 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/04 11:11:32 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,35 +63,6 @@ char	*cancat_arg(t_list *head)
 	return (argument);
 }
 
-/*char	*check_argument(char *argument, char **envi)
-{
-	int	i;
-	char	*value;
-	t_list	*head;
-
-	i = 0;
-	head = NULL;
-	if (argument[i] == '~' && (argument[i + 1] == '\0' || argument[i + 1] == '/'
-			|| (argument[i + 1] == '$' && argument[i + 2] != '\0')))
-	{
-		if ((value = get_envi_field("HOME", envi)) != NULL)
-			ft_lstaddlast(&head, ft_lstnew(value + 5, ft_strlen(value + 5)));
-		++argument;
-	}
-	while (argument[i] != '\0')
-	{
-		if (argument[i] == '$')
-		{
-			ft_lstaddlast(&head, ft_lstnew(argument, i));
-			ft_lstaddlast(&head, sub_envi_var(argument + i + 1, envi));
-		}
-		++i;
-	}
-	if (head)
-		return (cancat_arg(head));
-	return (argument);
-}*/
-
 char	*check_argument(char *argument, char **envi)
 {
 	char	*p;
@@ -102,12 +73,14 @@ char	*check_argument(char *argument, char **envi)
 
 	head = NULL;
 	str = argument;
-	while ((p = ft_strchr(argument, '$')) != NULL)
+	while ((p = ft_strchr(argument, '$')) != NULL && ft_isalnum(*(p + 1)))
 	{
 		if (p != argument)
 			ft_lstaddlast(&head, ft_lstnew(argument, p - argument));
 		++p;
+		//printf("p1 - %s\n", p);
 		value = get_envi_value(&p, envi);
+		//printf("p2 - %s\n", p);
 		ft_lstaddlast(&head, ft_lstnew(value, ft_strlen(value)));
 		argument = p;
 		if (*value == '\0')
@@ -119,17 +92,20 @@ char	*check_argument(char *argument, char **envi)
 			ft_lstaddlast(&head, ft_lstnew(argument, ft_strlen(argument)));
 		free(str);
 		argument = cancat_arg(head);
+		free_list(&head);
 	}
 	if (*argument == '~')
 	{
-		argument++;
-		if (*argument != '\0' && *argument != '/')
+		if (*(argument + 1) != '\0' && *(argument + 1) != '/')
 		{
-			free(argument);
-			return (NULL);
+			ft_putstr(NUD_SH);
+			str = ft_strdup(argument + 1);
 		}
-		home = get_envi_field("HOME", envi);
-		str = ft_strjoin(home + 5, argument + 1);
+		else
+		{
+			home = get_envi_field("HOME", envi);
+			str = ft_strjoin(home + 5, argument + 1);
+		}
 		free(argument);
 		argument = str;
 	}

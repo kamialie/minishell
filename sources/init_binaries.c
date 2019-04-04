@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:22:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/29 18:58:34 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/04 14:23:56 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,31 @@ t_bin	*get_new_bin(char *dir_path)
 	return (NULL);
 }
 
-t_bin	*init_binaries(char *path)
+void	init_binaries(char *path, t_bin **bins)
 {
 	char	*dir_path;
 	t_bin	*head;
 
+	printf("check\n");
 	if (path == NULL)
-		return (NULL);
+		return ;
+	if (*bins != NULL)
+		free_bins(bins);
 	head = NULL;
+	printf("check\n");
 	//printf("%s\n", path);
 	dir_path = ft_strcsub(path, ':');
 	//printf("%s\n", dir_path);
 	path += ft_strlen(dir_path) + 1;
 	while (*path != '\0')
 	{
-		dir_path = ft_strcsub(path, ':');
+		if (ft_strchr(path, ':'))
+		if ((dir_path = ft_strcsub(path, ':')) == NULL)
+			dir_path = ft_strdup(path);
+		printf("dir_path - %s\n", dir_path);
 		push_back_bin(&head, get_new_bin(dir_path));
 		//printf("%s\n", dir_path);
 		path += ft_strlen(dir_path) + 1;
 	}
-	return (head);
+	*bins = head;
 }

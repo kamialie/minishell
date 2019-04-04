@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:23:27 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/29 19:21:21 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/04 13:32:05 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	command(char **arguments, char **envi, t_bin *bins)
 	char	*fbp;
 	pid_t	childPID;
 
+	printf("bins - %p\n", bins);
 	fbp = find_binary(*arguments, bins);
 	if (fbp == NULL)
 	{

@@ -6,16 +6,26 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 16:30:06 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/29 16:30:28 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/04 12:39:02 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_struct(void *content, size_t len)
+void	free_list(t_list **list)
 {
-	free(content);
-	len = 0;
+	t_list	*tmp;
+	t_list	*head;
+
+	head = *list;
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->content);
+		free(tmp);
+	}
+	*list = NULL;
 }
 
 void	free_envi_array(char **envi)
@@ -36,4 +46,20 @@ void	free_arguments(char **arguments)
 	while (arguments[++i] != NULL)
 		free(arguments[i]);
 	free(arguments);
+}
+
+void	free_bins(t_bin **bins)
+{
+	t_bin	*tmp;
+	t_bin	*head;
+
+	head = *bins;
+	while (head != NULL)
+	{
+		free_arguments(head->bins);
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+	*bins = NULL;
 }

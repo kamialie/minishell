@@ -6,16 +6,14 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/29 19:16:04 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/04 13:40:20 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		check_command(char **arguments, char ***envi, t_bin *bins)
+int		check_command(char **arguments, char ***envi, t_bin **bins)
 {
-	if (arguments == NULL)
-		ft_putendl("no such user or named directory");
 	if (ft_strequ(arguments[0], "exit"))
 	{
 		free_arguments(arguments);
@@ -28,13 +26,13 @@ int		check_command(char **arguments, char ***envi, t_bin *bins)
 	else if (ft_strequ(arguments[0], "env"))
 		print_envi(*(arguments + 1), *envi);
 	else if (ft_strequ(arguments[0], "setenv"))
-		*envi = set_envi(arguments + 1, *envi);
+		set_envi(arguments + 1, envi, bins);
 	else if (ft_strequ(arguments[0], "unsetenv"))
-		*envi = unset_envi(arguments + 1, *envi);
+		unset_envi(arguments + 1, envi, bins);
 	else
-		command(arguments, *envi, bins);
-	if (*envi == NULL)
-		ft_putendl("error while set/unset env variable");
+		command(arguments, *envi, *bins);
+	//if (*envi == NULL)
+		//ft_putendl("error while set/unset env variable");
 	free_arguments(arguments);
 	return (0);
 }
@@ -49,8 +47,9 @@ int		main(int args, char **argv, char **environ)
 
 	(void)args;
 	(void)argv;
+	bins = NULL;
 	my_envi = init_environment(environ);
-	bins = init_binaries(get_envi_field("PATH", my_envi) + 5);
+	init_binaries(get_envi_field("PATH", my_envi) + 5, &bins);
 	//TMP OUTPUT
 	//head = bins;
 	//while (head != NULL)
@@ -70,8 +69,9 @@ int		main(int args, char **argv, char **environ)
 	{
 		buf[ret] = '\0';
 		str = ft_strtrim(buf);
-		if (*str != '\0' && check_command(init_arguments(str, my_envi), &my_envi, bins))
+		if (*str != '\0' && check_command(init_arguments(str, my_envi), &my_envi, &bins))
 		{
+			free_bins(&bins);
 			free_envi_array(my_envi);
 			free(str);
 			return (0);

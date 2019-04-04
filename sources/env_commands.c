@@ -6,57 +6,74 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:59:28 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/26 17:30:30 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/04 13:44:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**set_envi(char **arguments, char **envi)
+void	set_envi(char **arguments, char ***envi, t_bin **bins)
 {
 	char	*field;
+	char	**p;
 	char	**new_envi;
-	char	**my_envi;
+	char	**tmp_envi;
 	char	**old_envi;
 
-	old_envi = envi;
 	if (arguments[0] == NULL || arguments[1] == NULL || arguments[2] != NULL)
-		return (NULL);
+	{
+		ft_putendl(WN_SETENV);
+		return ;
+	}
 	field = ft_strjoin(*arguments, "=");
-	new_envi = get_envi_array(envi, 1);
-	my_envi = new_envi;
-	while (*envi != NULL)
-		*new_envi++ = ft_strdup(*envi++);
+	new_envi = get_envi_array(*envi, 1);
+	old_envi = *envi;
+	p = old_envi;
+	tmp_envi = new_envi;
+	while (*p != NULL)
+		*tmp_envi++ = ft_strdup(*p++);
 	free_envi_array(old_envi);
-	*new_envi++ = ft_strjoin(field, arguments[1]);
+	*tmp_envi++ = ft_strjoin(field, arguments[1]);
+	*tmp_envi = NULL;
+	printf("before - %p\n", *bins);
+	if (ft_strequ(field, "PATH="))
+		init_binaries(get_envi_field("PATH", new_envi) + 5, bins);
+	printf("after - %p\n", *bins);
 	free(field);
-	*new_envi = NULL;
-	return (my_envi);
+	*envi = new_envi;
 }
 
-char	**unset_envi(char **arguments, char **envi)
+void	unset_envi(char **arguments, char ***envi, t_bin **bins)
 {
-	char	*field;
 	char	**new_envi;
-	char	**my_envi;
+	char	**envi_head;
+	char	**tmp_envi;
 	char	**old_envi;
 
-	old_envi = envi;
 	if (arguments[0] == NULL || arguments[1] != NULL)
-		return (NULL);
-	field = *arguments;
-	new_envi = get_envi_array(envi, -1);
-	my_envi = new_envi;
-	while (*envi != NULL)
 	{
-		if (ft_strstr(*envi, field) == NULL)
-			*new_envi++ = ft_strdup(*envi++);
+		ft_putendl(WN_UNSETENV);
+		return ;
+	}
+	old_envi = *envi;
+	printf("before - %p\n", *bins);
+	if (ft_strequ(*arguments, "PATH"))
+		free_bins(bins);
+	printf("after - %p\n", *bins);
+	tmp_envi = *envi;
+	new_envi = get_envi_array(tmp_envi, -1);
+	envi_head = new_envi;
+	printf("check\n");
+	while (*tmp_envi != NULL)
+	{
+		if (ft_strstr(*tmp_envi, *arguments) == NULL)
+			*envi_head++ = ft_strdup(*tmp_envi++);
 		else
-			++envi;
+			++tmp_envi;
 	}
 	free_envi_array(old_envi);
-	*new_envi = NULL;
-	return (my_envi);
+	*envi_head = NULL;
+	*envi = new_envi;
 }
 
 void	print_envi(char *str, char **envi)
