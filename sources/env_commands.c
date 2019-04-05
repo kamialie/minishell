@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:59:28 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/05 12:58:27 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/05 16:13:54 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_envi(char **arguments, char ***envi, t_bin **bins)
 	tmp_envi = new_envi;
 	while (*p != NULL)
 		*tmp_envi++ = ft_strdup(*p++);
-	free_envi_array(old_envi);
+	free_char_array(old_envi);
 	*tmp_envi++ = ft_strjoin(field, arguments[1]);
 	*tmp_envi = NULL;
 	if (ft_strequ(field, "PATH="))
@@ -66,7 +66,7 @@ void	unset_envi(char **arguments, char ***envi, t_bin **bins)
 		else
 			++tmp_envi;
 	}
-	free_envi_array(old_envi);
+	free_char_array(old_envi);
 	*envi_head = NULL;
 	*envi = new_envi;
 }

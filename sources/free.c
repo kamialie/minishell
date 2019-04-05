@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 16:30:06 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/04 12:39:02 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/05 16:12:51 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,14 @@ void	free_list(t_list **list)
 	*list = NULL;
 }
 
-void	free_envi_array(char **envi)
-{
-	int	i;
-
-	i = -1;
-	while (envi[++i] != NULL)
-		free(envi[i]);
-	free(envi);
-}
-
-void	free_arguments(char **arguments)
+void	free_char_array(char **array)
 {
 	int		i;
 
 	i = -1;
-	while (arguments[++i] != NULL)
-		free(arguments[i]);
-	free(arguments);
+	while (array[++i] != NULL)
+		free(array[i]);
+	free(array);
 }
 
 void	free_bins(t_bin **bins)
@@ -56,7 +46,7 @@ void	free_bins(t_bin **bins)
 	head = *bins;
 	while (head != NULL)
 	{
-		free_arguments(head->bins);
+		free_char_array(head->bins);
 		tmp = head;
 		head = head->next;
 		free(tmp);

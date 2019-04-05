@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/25 13:14:39 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/20 13:30:01 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/05 16:44:01 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char		**ft_strsplit(char const *s, char c)
 		return (NULL);
 	while (i < count)
 	{
-		while (*str == c || *str != '\0')
+		while (*str == c && *str != '\0')
 			str++;
 		if ((array[i] = ft_write_word(&str, c)) == NULL)
 		{

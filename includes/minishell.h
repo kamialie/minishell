@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/05 13:21:27 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/05 15:56:48 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	command_path(char **arguments, char **envi);
 
 void	free_list(t_list **list);
 void	free_bins(t_bin **bins);
-void	free_envi_array(char **envi);
-void	free_arguments(char **arguments);
+void	free_char_array(char **array);
 
 #endif
