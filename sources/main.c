@@ -6,15 +6,19 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/04 13:40:20 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/05 13:52:19 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	control = 1;
+
 int		check_command(char **arguments, char ***envi, t_bin **bins)
 {
-	if (ft_strequ(arguments[0], "exit"))
+	if (**arguments == '/' || **arguments == '.')
+		command_path(arguments, *envi);
+	else if (ft_strequ(arguments[0], "exit"))
 	{
 		free_arguments(arguments);
 		return (1);
@@ -31,12 +35,19 @@ int		check_command(char **arguments, char ***envi, t_bin **bins)
 		unset_envi(arguments + 1, envi, bins);
 	else
 		command(arguments, *envi, *bins);
-	//if (*envi == NULL)
-		//ft_putendl("error while set/unset env variable");
 	free_arguments(arguments);
 	return (0);
 }
 
+void	handle_sig(int sig)
+{
+	sig = 0;
+	control = 1;
+	signal(SIGINT, handle_sig);
+	write(1, "\n", 1);
+	ft_putstr(O_YELLOW "minishell " O_NC);
+}
+	
 int		main(int args, char **argv, char **environ)
 {
 	int		ret;
@@ -64,6 +75,7 @@ int		main(int args, char **argv, char **environ)
 		//head = head->next;
 	//}
 	//END
+	signal(SIGINT, handle_sig);
 	ft_putstr(O_YELLOW "minishell " O_NC);
 	while ((ret = read(0, buf, BUFF_SIZE)))
 	{

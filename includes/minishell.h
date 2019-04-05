@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/04 13:41:10 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/05 13:21:27 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/stat.h>
 # include <stdio.h>
 # include <dirent.h>
+# include <signal.h>
 
 # define O_YELLOW "\033[01;33m"
 # define O_NC "\033[0m"
@@ -66,6 +67,7 @@ void	change_direct(char **arguments, char ***envi);
 void	echo(char **arguments);
 
 void	command(char **arguments, char **envi, t_bin *bins);
+void	command_path(char **arguments, char **envi);
 
 void	free_list(t_list **list);
 void	free_bins(t_bin **bins);

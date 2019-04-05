@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:22:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/04 14:23:56 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/05 12:56:32 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	**get_binaries(char *dir_path)
 
 t_bin	*get_new_bin(char *dir_path)
 {
-	//struct dirent	*file;
 	t_bin	*new;
 
 	if (access(dir_path, F_OK) == 0)
@@ -74,7 +73,6 @@ t_bin	*get_new_bin(char *dir_path)
 		new = (t_bin *)malloc(sizeof(*new));
 		new->dir = dir_path;
 		new->bins = get_binaries(dir_path);
-		//printf("binary - %s\n", new->bins[0]);
 		new->next = NULL;
 		return (new);
 	}
@@ -86,25 +84,19 @@ void	init_binaries(char *path, t_bin **bins)
 	char	*dir_path;
 	t_bin	*head;
 
-	printf("check\n");
 	if (path == NULL)
 		return ;
 	if (*bins != NULL)
 		free_bins(bins);
 	head = NULL;
-	printf("check\n");
-	//printf("%s\n", path);
 	dir_path = ft_strcsub(path, ':');
-	//printf("%s\n", dir_path);
 	path += ft_strlen(dir_path) + 1;
 	while (*path != '\0')
 	{
 		if (ft_strchr(path, ':'))
 		if ((dir_path = ft_strcsub(path, ':')) == NULL)
 			dir_path = ft_strdup(path);
-		printf("dir_path - %s\n", dir_path);
 		push_back_bin(&head, get_new_bin(dir_path));
-		//printf("%s\n", dir_path);
 		path += ft_strlen(dir_path) + 1;
 	}
 	*bins = head;

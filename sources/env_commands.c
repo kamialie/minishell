@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:59:28 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/04 13:44:28 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/05 12:58:27 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ void	set_envi(char **arguments, char ***envi, t_bin **bins)
 	free_envi_array(old_envi);
 	*tmp_envi++ = ft_strjoin(field, arguments[1]);
 	*tmp_envi = NULL;
-	printf("before - %p\n", *bins);
 	if (ft_strequ(field, "PATH="))
 		init_binaries(get_envi_field("PATH", new_envi) + 5, bins);
-	printf("after - %p\n", *bins);
 	free(field);
 	*envi = new_envi;
 }
@@ -56,14 +54,11 @@ void	unset_envi(char **arguments, char ***envi, t_bin **bins)
 		return ;
 	}
 	old_envi = *envi;
-	printf("before - %p\n", *bins);
 	if (ft_strequ(*arguments, "PATH"))
 		free_bins(bins);
-	printf("after - %p\n", *bins);
 	tmp_envi = *envi;
 	new_envi = get_envi_array(tmp_envi, -1);
 	envi_head = new_envi;
-	printf("check\n");
 	while (*tmp_envi != NULL)
 	{
 		if (ft_strstr(*tmp_envi, *arguments) == NULL)
