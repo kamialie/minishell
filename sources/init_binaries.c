@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:22:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/05 12:56:32 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/06 12:46:53 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,13 @@ void	push_back_bin(t_bin **head, t_bin *new)
 	}
 }
 
-char	**get_binaries(char *dir_path)
+char	**join_bin_array(t_list *head)
 {
-	DIR				*dir;
-	char			**new;
-	int				count;
-	char			*file_path;
-	char			**bin_array;
-	struct dirent	*file;
-	t_list			*head;
-	t_list			*tmp;
+	int		count;
+	char	**bin_array;
+	char	**new;
+	t_list	*tmp;
 
-	head = NULL;
-	count = 0;
-	dir = opendir(dir_path);
-	while ((file = readdir(dir)))
-	{
-		file_path = ft_strjoin_mid(dir_path, file->d_name, '/');
-		if (access(file_path, X_OK) == 0 && *file->d_name != '.')
-			ft_lstadd(&head, ft_lstnew(file->d_name, ft_strlen(file->d_name)));
-	}
-	closedir(dir);
 	count = ft_lstcount(head);
 	bin_array = (char **)malloc(sizeof(*bin_array) * ++count);
 	new = bin_array;
@@ -62,6 +48,41 @@ char	**get_binaries(char *dir_path)
 	}
 	*new = NULL;
 	return (bin_array);
+}
+
+char	**get_binaries(char *dir_path)
+{
+	DIR				*dir;
+	//char			**new;
+	//int				count;
+	char			*file_path;
+	//char			**bin_array;
+	struct dirent	*file;
+	t_list			*head;
+	//t_list			*tmp;
+
+	head = NULL;
+	dir = opendir(dir_path);
+	while ((file = readdir(dir)))
+	{
+		file_path = ft_strjoin_mid(dir_path, file->d_name, '/');
+		if (access(file_path, X_OK) == 0 && *file->d_name != '.')
+			ft_lstadd(&head, ft_lstnew(file->d_name, ft_strlen(file->d_name)));
+	}
+	closedir(dir);
+	//count = ft_lstcount(head);
+	//bin_array = (char **)malloc(sizeof(*bin_array) * ++count);
+	//new = bin_array;
+	//while (head != NULL)
+	//{
+		//*new++ = head->content;
+		//tmp = head;
+		//free(tmp);
+		//head = head->next;
+	//}
+	//*new = NULL;
+	//return (bin_array);
+	return (join_bin_array(head));
 }
 
 t_bin	*get_new_bin(char *dir_path)

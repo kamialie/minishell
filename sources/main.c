@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/05 16:44:37 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/06 13:20:47 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		check_command(char **arguments, char ***envi, t_bin **bins)
 	return (exit);
 }
 
-void	input_queue(char ***my_envi, t_bin *bins)
+void	input_queue(char ***my_envi, t_bin **bins)
 {
 	int		i;
 	int		ret;
@@ -56,8 +56,7 @@ void	input_queue(char ***my_envi, t_bin *bins)
 		while (command_queue[++i] != NULL)
 		{
 			str = ft_strtrim(command_queue[i]);
-			printf("str - %s\n", str);
-			if (*str != '\0' && check_command(init_arguments(str, *my_envi), my_envi, &bins))
+			if (*str != '\0' && check_command(init_arguments(str, *my_envi), my_envi, bins))
 			{
 				free(command_queue);
 				free(str);
@@ -90,7 +89,7 @@ int		main(int args, char **argv, char **environ)
 	my_envi = init_environment(environ);
 	init_binaries(get_envi_field("PATH", my_envi) + 5, &bins);
 	//signal(SIGINT, handle_sig);
-	input_queue(&my_envi, bins);
+	input_queue(&my_envi, &bins);
 	free_bins(&bins);
 	free_char_array(my_envi);
 	return (0);
