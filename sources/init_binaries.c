@@ -53,13 +53,9 @@ char	**join_bin_array(t_list *head)
 char	**get_binaries(char *dir_path)
 {
 	DIR				*dir;
-	//char			**new;
-	//int				count;
 	char			*file_path;
-	//char			**bin_array;
 	struct dirent	*file;
 	t_list			*head;
-	//t_list			*tmp;
 
 	head = NULL;
 	dir = opendir(dir_path);
@@ -70,22 +66,10 @@ char	**get_binaries(char *dir_path)
 			ft_lstadd(&head, ft_lstnew(file->d_name, ft_strlen(file->d_name)));
 	}
 	closedir(dir);
-	//count = ft_lstcount(head);
-	//bin_array = (char **)malloc(sizeof(*bin_array) * ++count);
-	//new = bin_array;
-	//while (head != NULL)
-	//{
-		//*new++ = head->content;
-		//tmp = head;
-		//free(tmp);
-		//head = head->next;
-	//}
-	//*new = NULL;
-	//return (bin_array);
 	return (join_bin_array(head));
 }
 
-t_bin	*get_new_bin(char *dir_path)
+t_bin	*get_bin_direct(char *dir_path)
 {
 	t_bin	*new;
 
@@ -117,7 +101,7 @@ void	init_binaries(char *path, t_bin **bins)
 		if (ft_strchr(path, ':'))
 		if ((dir_path = ft_strcsub(path, ':')) == NULL)
 			dir_path = ft_strdup(path);
-		push_back_bin(&head, get_new_bin(dir_path));
+		push_back_bin(&head, get_bin_direct(dir_path));
 		path += ft_strlen(dir_path) + 1;
 	}
 	*bins = head;

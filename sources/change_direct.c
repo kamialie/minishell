@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	go_to_path(char *path)
+static void	go_to_path(char *path)
 {
 	struct stat	file_stat;
 
@@ -37,6 +37,18 @@ void	go_to_path(char *path)
 	}
 }
 
+static void	go_to_oldpwd(char **envi)
+{
+	char *path;
+
+	if ((path = get_envi_field("OLDPWD", envi)) == NULL)
+		ft_putendl(NF_OLDPWD_CD);
+	else if (chdir(path + 7) != 0)
+		ft_putendl(ER_CD);
+	else
+		ft_putendl(path + 7);
+}
+
 void	change_direct(char **arguments, char ***envi)
 {
 	char	*path;
@@ -54,14 +66,7 @@ void	change_direct(char **arguments, char ***envi)
 			ft_putendl(ER_CD);
 	}
 	else if (ft_strequ(*arguments, "-"))
-	{
-		if ((path = get_envi_field("OLDPWD", *envi)) == NULL)
-			ft_putendl(NF_OLDPWD_CD);
-		else if (chdir(path + 7) != 0)
-			ft_putendl(ER_CD);
-		else
-			ft_putendl(path + 7);
-	}
+		go_to_oldpwd(*envi);
 	else
 		go_to_path(*arguments);
 	update_envi_field("OLDPWD", ft_strdup(get_envi_field("PWD", *envi) + 4), envi);

@@ -58,6 +58,7 @@ void	update_envi_field(char *field, char *new_line, char ***envi);
 
 void	init_binaries(char *path, t_bin **bins);
 
+void	input_queue(char ***envi, t_bin **bins);
 char	**init_arguments(char *input, char **envi);
 char	*check_argument(char *argument, char **envi);
 
@@ -71,6 +72,6 @@ void	command_path(char **arguments, char **envi);
 
 void	free_list(t_list **list);
 void	free_bins(t_bin **bins);
-void	free_char_array(char **array);
+void	free_char_array(char ***array);
 
 #endif

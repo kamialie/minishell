@@ -28,14 +28,17 @@ void	free_list(t_list **list)
 	*list = NULL;
 }
 
-void	free_char_array(char **array)
+void	free_char_array(char ***arg)
 {
-	int		i;
+	char		**array;
 
-	i = -1;
-	while (array[++i] != NULL)
-		free(array[i]);
-	free(array);
+	if (*arg == NULL)
+		return ;
+	array = *arg;
+	while (*array != NULL)
+		free(*array++);
+	free(*arg);
+	*arg = NULL;
 }
 
 void	free_bins(t_bin **bins)
@@ -48,7 +51,7 @@ void	free_bins(t_bin **bins)
 	head = *bins;
 	while (head != NULL)
 	{
-		free_char_array(head->bins);
+		free_char_array(&head->bins);
 		tmp = head;
 		head = head->next;
 		free(tmp);

@@ -12,7 +12,23 @@
 
 #include "minishell.h"
 
-char	*find_binary(char *command, t_bin *bins)
+static void	execute_binary(char *fbp, char **arguments, char **envi)
+{
+	pid_t	childPID;
+
+	childPID = fork();
+	if (childPID >= 0)
+	{
+		if (childPID == 0)
+			execve(fbp, arguments, envi);
+		else
+			wait(NULL);
+	}
+	else
+		ft_putendl("fork failed");
+}
+
+static char	*find_binary(char *command, t_bin *bins)
 {
 	char	*fbp;
 	char	**folder;
@@ -33,36 +49,6 @@ char	*find_binary(char *command, t_bin *bins)
 	return (NULL);
 }
 
-void	execute_binary(char *fbp, char **arguments, char **envi)
-{
-	pid_t	childPID;
-
-	childPID = fork();
-	if (childPID >= 0)
-	{
-		if (childPID == 0)
-			execve(fbp, arguments, envi);
-		else
-			wait(NULL);
-	}
-	else
-		ft_putendl("fork failed");
-}
-
-void	command_path(char **arguments, char **envi)
-{
-	char	*fbp;
-
-	fbp = *arguments;
-	if (access(fbp, F_OK) == -1)
-	{
-		ft_putstr(NF_FOD_CD);
-		ft_putendl(fbp);
-	}
-	else
-		execute_binary(fbp, arguments, envi);
-}
-
 void	command(char **arguments, char **envi, t_bin *bins)
 {
 	char	*fbp;
@@ -78,4 +64,18 @@ void	command(char **arguments, char **envi, t_bin *bins)
 		execute_binary(fbp, arguments, envi);
 		free(fbp);
 	}
+}
+
+void	command_path(char **arguments, char **envi)
+{
+	char	*fbp;
+
+	fbp = *arguments;
+	if (access(fbp, F_OK) == -1)
+	{
+		ft_putstr(NF_FOD_CD);
+		ft_putendl(fbp);
+	}
+	else
+		execute_binary(fbp, arguments, envi);
 }
