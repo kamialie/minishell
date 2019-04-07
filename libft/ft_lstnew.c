@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 16:23:23 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/29 13:35:24 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/07 16:26:12 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*ft_write_word(char *str, size_t content_size)
 	char	*s;
 
 	i = 0;
-	if (str == NULL || !(s = (char *)malloc(sizeof(*s) * content_size)))
+	if (str == NULL || !(s = (char *)malloc(sizeof(*s) * (content_size + 1))))
 		return (NULL);
 	while (i < content_size)
 	{

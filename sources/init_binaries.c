@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:22:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/06 12:46:53 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/07 19:16:02 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,23 @@ void	push_back_bin(t_bin **head, t_bin *new)
 
 char	**join_bin_array(t_list *head)
 {
+	int		i;
 	int		count;
 	char	**bin_array;
-	char	**new;
 	t_list	*tmp;
 
+	i = 0;
 	count = ft_lstcount(head);
+	//printf("count - %d\n", count);
 	bin_array = (char **)malloc(sizeof(*bin_array) * ++count);
-	new = bin_array;
 	while (head != NULL)
 	{
-		*new++ = head->content;
+		bin_array[i++] = head->content;
 		tmp = head;
 		free(tmp);
 		head = head->next;
 	}
-	*new = NULL;
+	bin_array[i] = NULL;
 	return (bin_array);
 }
 
@@ -59,6 +60,7 @@ char	**get_binaries(char *dir_path)
 
 	head = NULL;
 	dir = opendir(dir_path);
+	printf("dir_path - %s\n", dir_path);
 	while ((file = readdir(dir)))
 	{
 		file_path = ft_strjoin_mid(dir_path, file->d_name, '/');
@@ -86,7 +88,8 @@ t_bin	*get_bin_direct(char *dir_path)
 
 void	init_binaries(char *path, t_bin **bins)
 {
-	char	*dir_path;
+	int		i;
+	char	**dir;
 	t_bin	*head;
 
 	if (path == NULL)
@@ -94,15 +97,18 @@ void	init_binaries(char *path, t_bin **bins)
 	if (*bins != NULL)
 		free_bins(bins);
 	head = NULL;
-	dir_path = ft_strcsub(path, ':');
-	path += ft_strlen(dir_path) + 1;
-	while (*path != '\0')
+	if (ft_strchr(path, ':'))
 	{
-		if (ft_strchr(path, ':'))
-		if ((dir_path = ft_strcsub(path, ':')) == NULL)
-			dir_path = ft_strdup(path);
-		push_back_bin(&head, get_bin_direct(dir_path));
-		path += ft_strlen(dir_path) + 1;
+		i = 0;
+		dir = ft_strsplit(path, ':');
+		while (dir[i] != NULL)
+		{
+			push_back_bin(&head, get_bin_direct(dir[i]));
+			i++;
+		}
+		free_char_array(&dir);
 	}
+	else
+		push_back_bin(&head, get_bin_direct(path));
 	*bins = head;
 }

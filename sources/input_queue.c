@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input_queue.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/07 16:19:25 by rgyles            #+#    #+#             */
+/*   Updated: 2019/04/07 16:22:51 by rgyles           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void		exec_command(char **arguments, char ***envi, t_bin **bins)
@@ -16,10 +28,9 @@ static void		exec_command(char **arguments, char ***envi, t_bin **bins)
 		unset_envi(arguments + 1, envi, bins);
 	else
 		command(arguments, *envi, *bins);
-	//free_char_array(&arguments);
 }
 
-void	form_zapros(char *str, char ***envi, t_bin **bins)
+static void	form_request(char *str, char ***envi, t_bin **bins)
 {
 	char	**arguments;
 
@@ -38,7 +49,7 @@ static void	command_queue(char *input, char ***envi, t_bin **bins)
 	commands = ft_strsplit(input, ';');
 	i = -1;
 	while (commands[++i] != NULL)
-		form_zapros(commands[i], envi, bins);
+		form_request(commands[i], envi, bins);
 	free_char_array(&commands);
 }
 
@@ -60,7 +71,7 @@ void	input_queue(char ***envi, t_bin **bins)
 		if (*str != '\0')
 		{
 			if (ft_strchr(str, ';') == NULL)
-				form_zapros(str, envi, bins);
+				form_request(str, envi, bins);
 			else
 				command_queue(str, envi, bins);
 		}
