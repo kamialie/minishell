@@ -6,18 +6,19 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:19:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/29 14:08:41 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/08 14:15:27 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*join_envi_line(char *field, char *value)
+static char	*join_envi_line(char *field, char *value)
 {
 	char	*line;
 	char	*new;
 
-	new = (char *)malloc(sizeof(*line) * (ft_strlen(field) + ft_strlen(value) + 2));
+	new = (char *)malloc(sizeof(*line) *
+		(ft_strlen(field) + ft_strlen(value) + 2));
 	line = new;
 	while (*field != '\0')
 		*new++ = *field++;
@@ -28,7 +29,7 @@ char	*join_envi_line(char *field, char *value)
 	return (line);
 }
 
-int	confirm_envi_field(char *line, char *field)
+static int	confirm_envi_field(char *line, char *field)
 {
 	int	i;
 
@@ -40,7 +41,7 @@ int	confirm_envi_field(char *line, char *field)
 	return (0);
 }
 
-char	*get_envi_field(char *field, char **envi)
+char		*get_envi_field(char *field, char **envi)
 {
 	while (*envi != NULL)
 	{
@@ -51,7 +52,7 @@ char	*get_envi_field(char *field, char **envi)
 	return (NULL);
 }
 
-void	update_envi_field(char *field, char *new_line, char ***envi)
+void		update_envi_field(char *field, char *new_line, char ***envi)
 {
 	char	**new_envi;
 

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:22:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/07 19:16:02 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/08 14:11:08 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	**join_bin_array(t_list *head)
 
 	i = 0;
 	count = ft_lstcount(head);
-	//printf("count - %d\n", count);
 	bin_array = (char **)malloc(sizeof(*bin_array) * ++count);
 	while (head != NULL)
 	{
@@ -60,7 +59,6 @@ char	**get_binaries(char *dir_path)
 
 	head = NULL;
 	dir = opendir(dir_path);
-	printf("dir_path - %s\n", dir_path);
 	while ((file = readdir(dir)))
 	{
 		file_path = ft_strjoin_mid(dir_path, file->d_name, '/');

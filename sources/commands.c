@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:23:27 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/05 12:59:05 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/08 14:14:05 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static void	execute_binary(char *fbp, char **arguments, char **envi)
 {
-	pid_t	childPID;
+	pid_t	childpid;
 
-	childPID = fork();
-	if (childPID >= 0)
+	childpid = fork();
+	if (childpid >= 0)
 	{
-		if (childPID == 0)
+		if (childpid == 0)
 			execve(fbp, arguments, envi);
 		else
 			wait(NULL);
@@ -49,7 +49,7 @@ static char	*find_binary(char *command, t_bin *bins)
 	return (NULL);
 }
 
-void	command(char **arguments, char **envi, t_bin *bins)
+void		command(char **arguments, char **envi, t_bin *bins)
 {
 	char	*fbp;
 
@@ -66,7 +66,7 @@ void	command(char **arguments, char **envi, t_bin *bins)
 	}
 }
 
-void	command_path(char **arguments, char **envi)
+void		command_path(char **arguments, char **envi)
 {
 	char	*fbp;
 

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 10:17:07 by rgyles            #+#    #+#             */
-/*   Updated: 2019/03/28 16:43:37 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/08 14:13:01 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ static void	go_to_oldpwd(char **envi)
 		ft_putendl(path + 7);
 }
 
-void	change_direct(char **arguments, char ***envi)
+void		change_direct(char **arguments, char ***envi)
 {
 	char	*path;
-	
+
 	if (*arguments != NULL && *(arguments + 1) != NULL)
 	{
 		ft_putendl(TMA_CD);
@@ -69,6 +69,7 @@ void	change_direct(char **arguments, char ***envi)
 		go_to_oldpwd(*envi);
 	else
 		go_to_path(*arguments);
-	update_envi_field("OLDPWD", ft_strdup(get_envi_field("PWD", *envi) + 4), envi);
+	update_envi_field("OLDPWD",
+		ft_strdup(get_envi_field("PWD", *envi) + 4), envi);
 	update_envi_field("PWD", getcwd(NULL, 0), envi);
 }

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/04 11:11:32 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/08 14:08:02 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,10 @@ static char	*get_envi_value(char **argument, char **envi)
 		value = ft_strchr(value, '=') + 1;
 		value = ft_strdup(value);
 	}
-	else
-		value = ft_strnew(1);
 	return (value);
 }
 
-char	*cancat_arg(t_list *head)
+static char	*cancat_arg(t_list *head)
 {
 	int	i;
 	int	total_len;
@@ -63,37 +61,50 @@ char	*cancat_arg(t_list *head)
 	return (argument);
 }
 
-char	*check_argument(char *argument, char **envi)
+static void	add_pid(t_list **head)
+{
+	char	*pid;
+
+	pid = ft_itoa(getpid());
+	ft_lstadd(head, ft_lstnew(pid, ft_strlen(pid)));
+}
+
+static char	*check_dollar_sign(char *argument, char **envi)
 {
 	char	*p;
 	char	*str;
 	char	*value;
-	char	*home;
 	t_list	*head;
 
 	head = NULL;
 	str = argument;
-	while ((p = ft_strchr(argument, '$')) != NULL && ft_isalnum(*(p + 1)))
+	while ((p = ft_strchr(argument, '$')))
 	{
 		if (p != argument)
 			ft_lstaddlast(&head, ft_lstnew(argument, p - argument));
-		++p;
-		//printf("p1 - %s\n", p);
-		value = get_envi_value(&p, envi);
-		//printf("p2 - %s\n", p);
-		ft_lstaddlast(&head, ft_lstnew(value, ft_strlen(value)));
+		if (*++p == '$')
+		{
+			add_pid(&head);
+			++p;
+		}
+		else if (ft_isalnum(*p))
+		{
+			if ((value = get_envi_value(&p, envi)) != NULL)
+				ft_lstaddlast(&head, ft_lstnew(value, ft_strlen(value)));
+		}
 		argument = p;
-		if (*value == '\0')
-			break ;
 	}
-	if (head != NULL)
-	{
-		if (*argument != '\0')
-			ft_lstaddlast(&head, ft_lstnew(argument, ft_strlen(argument)));
-		free(str);
-		argument = cancat_arg(head);
-		free_list(&head);
-	}
+	free(str);
+	return (cancat_arg(head));
+}
+
+char	*check_argument(char *argument, char **envi)
+{
+	char	*str;
+	char	*home;
+
+	if (ft_strchr(argument, '$'))
+		argument = check_dollar_sign(argument, envi);
 	if (*argument == '~')
 	{
 		if (*(argument + 1) != '\0' && *(argument + 1) != '/')
