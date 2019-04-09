@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:19:25 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 17:38:37 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/09 18:57:33 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	command_queue(char *input, char ***envi, t_bin **bins)
 	free_char_array(&commands);
 }
 
-void		input_queue(char ***envi, t_bin **bins)
+int			input_queue(char ***envi, t_bin **bins)
 {
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
@@ -61,12 +61,12 @@ void		input_queue(char ***envi, t_bin **bins)
 	char	*p;
 
 	ft_putstr(O_YELLOW "minishell " O_NC);
-	while  ((ret = read(0, buf, BUFF_SIZE)))
+	if  ((ret = read(0, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
 		p = ft_strstr(buf, "exit");
 		if (p != NULL && ft_isalnum(*(p + 4)) == 0)
-			return ;
+			return (0);
 		str = ft_strtrim(buf);
 		if (*str != '\0')
 		{
@@ -77,4 +77,5 @@ void		input_queue(char ***envi, t_bin **bins)
 		}
 		free(str);
 	}
+	return (1);
 }

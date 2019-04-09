@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 17:38:57 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/09 18:57:55 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_sig(int sig)
 	sig = 0;
 	//control = 0;
 	signal(SIGINT, handle_sig);
-	//write(1, "\n", 1);
+	write(1, "\n", 1);
 	//ft_putstr(O_YELLOW "minishell " O_NC);
 }
 
@@ -34,8 +34,10 @@ int		main(int args, char **argv, char **environ)
 	bins = NULL;
 	my_envi = init_environment(*argv, environ);
 	init_binaries(get_envi_field("PATH", my_envi) + 5, &bins);
+	//ft_putstr(O_YELLOW "minishell " O_NC);
 	signal(SIGINT, handle_sig);
-	input_queue(&my_envi, &bins);
+	while (input_queue(&my_envi, &bins))
+		;
 	free_bins(&bins);
 	free_char_array(&my_envi);
 	return (0);

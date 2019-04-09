@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 11:14:24 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/09 18:57:09 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void			init_binaries(char *path, t_bin **bins);
 char			**init_arguments(char *input, char **envi);
 char			*check_argument(char *argument, char **envi);
 
-void			input_queue(char ***envi, t_bin **bins);
+int				input_queue(char ***envi, t_bin **bins);
 
 void			set_envi(char **arguments, char ***envi, t_bin **bins);
 void			unset_envi(char **arguments, char ***envi, t_bin **bins);
