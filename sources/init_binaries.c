@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:22:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/08 14:11:08 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/09 10:43:03 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ void	init_binaries(char *path, t_bin **bins)
 
 	if (path == NULL)
 		return ;
-	if (*bins != NULL)
-		free_bins(bins);
 	head = NULL;
 	if (ft_strchr(path, ':'))
 	{

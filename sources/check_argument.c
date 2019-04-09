@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 18:30:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/08 14:08:02 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/09 10:25:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*get_envi_value(char **argument, char **envi)
 {
-	int	len;
+	int		len;
 	char	*p;
 	char	*field;
 	char	*value;
@@ -35,8 +35,8 @@ static char	*get_envi_value(char **argument, char **envi)
 
 static char	*cancat_arg(t_list *head)
 {
-	int	i;
-	int	total_len;
+	int		i;
+	int		total_len;
 	char	*str;
 	char	*argument;
 	t_list	*tmp_head;
@@ -98,7 +98,7 @@ static char	*check_dollar_sign(char *argument, char **envi)
 	return (cancat_arg(head));
 }
 
-char	*check_argument(char *argument, char **envi)
+char		*check_argument(char *argument, char **envi)
 {
 	char	*str;
 	char	*home;

@@ -6,13 +6,13 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:19:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/08 14:15:27 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/09 15:44:25 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*join_envi_line(char *field, char *value)
+char		*join_envi_line(char *field, char *value)
 {
 	char	*line;
 	char	*new;
@@ -62,7 +62,8 @@ void		update_envi_field(char *field, char *new_line, char ***envi)
 		if (confirm_envi_field(*new_envi, field))
 		{
 			free(*new_envi);
-			*new_envi = new_line;
+			printf("new value - %s\n", new_line);
+			*new_envi = join_envi_line(field, new_line);
 			return ;
 		}
 		++new_envi;

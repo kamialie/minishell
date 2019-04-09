@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 10:15:53 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/04 10:11:39 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/09 10:25:55 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_list	*get_words(char *input, char **envi)
 	return (head);
 }
 
-char	**init_arguments(char *input, char **envi)
+char			**init_arguments(char *input, char **envi)
 {
 	int		i;
 	char	**arguments;

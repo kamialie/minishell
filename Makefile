@@ -6,7 +6,7 @@
 #    By: lwyl-the <lwyl-the@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/20 10:25:27 by rgyles            #+#    #+#              #
-#    Updated: 2019/03/29 16:31:38 by rgyles           ###   ########.fr        #
+#    Updated: 2019/04/09 10:59:54 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFT_DIR = libft
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
-FLAGS = -Wall -Wextra -Werror -o2
+FLAGS = -Wall -Wextra -Werror
 
 INCLUDES = -I includes -I libft
 

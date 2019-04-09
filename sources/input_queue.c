@@ -6,13 +6,13 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:19:25 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/07 16:22:51 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/09 17:38:37 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		exec_command(char **arguments, char ***envi, t_bin **bins)
+static void	exec_command(char **arguments, char ***envi, t_bin **bins)
 {
 	if (**arguments == '/' || **arguments == '.')
 		command_path(arguments, *envi);
@@ -53,7 +53,7 @@ static void	command_queue(char *input, char ***envi, t_bin **bins)
 	free_char_array(&commands);
 }
 
-void	input_queue(char ***envi, t_bin **bins)
+void		input_queue(char ***envi, t_bin **bins)
 {
 	int		ret;
 	char	buf[BUFF_SIZE + 1];
@@ -61,7 +61,7 @@ void	input_queue(char ***envi, t_bin **bins)
 	char	*p;
 
 	ft_putstr(O_YELLOW "minishell " O_NC);
-	while ((ret = read(0, buf, BUFF_SIZE)))
+	while  ((ret = read(0, buf, BUFF_SIZE)))
 	{
 		buf[ret] = '\0';
 		p = ft_strstr(buf, "exit");
@@ -76,6 +76,5 @@ void	input_queue(char ***envi, t_bin **bins)
 				command_queue(str, envi, bins);
 		}
 		free(str);
-		ft_putstr(O_YELLOW "minishell " O_NC);
 	}
 }

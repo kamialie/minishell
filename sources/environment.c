@@ -6,13 +6,13 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:38:47 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/08 14:18:40 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/09 15:19:54 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_envi_array(char **envi, int flag)
+char		**get_envi_array(char **envi, int flag)
 {
 	int		size;
 	char	**my_env;
@@ -20,11 +20,27 @@ char	**get_envi_array(char **envi, int flag)
 	size = 0;
 	while (*envi++ != NULL)
 		++size;
-	my_env = (char **)malloc(sizeof(*my_env) * (++size + flag)); //initialize last cell to NULL
+	my_env = (char **)malloc(sizeof(*my_env) * (size + flag + 1));
+	my_env[size + flag] = NULL;
 	return (my_env);
 }
 
-char	**init_environment(char **environ)
+static char	*get_shell_path(char *str)
+{
+	char	*s1;
+	char	*s2;
+	char	*line;
+
+	s1 = getcwd(NULL, 0);
+	s2 = ft_strjoin(s1, "/");
+	free(s1);
+	s1 = ft_strjoin(s2, str);
+	line = join_envi_line("SHELL", s1);
+	free(s1);
+	return (line);
+}
+
+char		**init_environment(char *str, char **environ)
 {
 	char	*lvl;
 	char	**new_envi;
@@ -35,7 +51,7 @@ char	**init_environment(char **environ)
 	while (*environ != NULL)
 	{
 		if (ft_strstr(*environ, "SHELL"))
-			*new_envi = getcwd(NULL, 0); //need full path to binary
+			*new_envi = get_shell_path(str);
 		else if (ft_strstr(*environ, "SHLVL"))
 		{
 			lvl = ft_itoa(ft_atoi(*environ + 6) + 1);
@@ -48,6 +64,5 @@ char	**init_environment(char **environ)
 		++environ;
 	}
 	*new_envi++ = ft_strdup("POLYANA=PrivetMoyDorogoyDrug");
-	*new_envi = NULL;
 	return (my_envi);
 }
