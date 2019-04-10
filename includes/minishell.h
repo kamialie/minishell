@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 18:57:09 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 14:50:01 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char			**get_envi_array(char **envi, int flag);
 void			free_envi_array(char **envi);
 void			print_envi(char *str, char **envi);
 char			*get_envi_field(char *field, char **envi);
-void			update_envi_field(char *field, char *new_line, char ***envi);
+int				update_envi_field(char *field, char *new_line, char ***envi);
 char			*join_envi_line(char *field, char *value);
 
 void			init_binaries(char *path, t_bin **bins);
@@ -62,7 +62,8 @@ void			init_binaries(char *path, t_bin **bins);
 char			**init_arguments(char *input, char **envi);
 char			*check_argument(char *argument, char **envi);
 
-int				input_queue(char ***envi, t_bin **bins);
+void			form_request(char *str, char ***envi, t_bin **bins);
+void			command_queue(char *input, char ***envi, t_bin **bins);
 
 void			set_envi(char **arguments, char ***envi, t_bin **bins);
 void			unset_envi(char **arguments, char ***envi, t_bin **bins);

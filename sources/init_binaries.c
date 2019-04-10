@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:22:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 10:43:03 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 15:48:04 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ char	**join_bin_array(t_list *head)
 	{
 		bin_array[i++] = head->content;
 		tmp = head;
-		free(tmp);
 		head = head->next;
+		free(tmp);
 	}
 	bin_array[i] = NULL;
 	return (bin_array);
@@ -102,7 +102,7 @@ void	init_binaries(char *path, t_bin **bins)
 			push_back_bin(&head, get_bin_direct(dir[i]));
 			i++;
 		}
-		free_char_array(&dir);
+		free(dir);
 	}
 	else
 		push_back_bin(&head, get_bin_direct(path));

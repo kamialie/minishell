@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:19:54 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 15:44:25 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 12:45:33 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char		*get_envi_field(char *field, char **envi)
 	return (NULL);
 }
 
-void		update_envi_field(char *field, char *new_line, char ***envi)
+int			update_envi_field(char *field, char *new_line, char ***envi)
 {
 	char	**new_envi;
 
@@ -62,10 +62,10 @@ void		update_envi_field(char *field, char *new_line, char ***envi)
 		if (confirm_envi_field(*new_envi, field))
 		{
 			free(*new_envi);
-			printf("new value - %s\n", new_line);
 			*new_envi = join_envi_line(field, new_line);
-			return ;
+			return (1);
 		}
 		++new_envi;
 	}
+	return (0);
 }

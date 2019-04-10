@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:19:25 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 20:41:47 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 14:49:42 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	exec_command(char **arguments, char ***envi, t_bin **bins)
 		command(arguments, *envi, *bins);
 }
 
-static void	form_request(char *str, char ***envi, t_bin **bins)
+void		form_request(char *str, char ***envi, t_bin **bins)
 {
 	char	**arguments;
 
@@ -41,7 +41,7 @@ static void	form_request(char *str, char ***envi, t_bin **bins)
 	}
 }
 
-static void	command_queue(char *input, char ***envi, t_bin **bins)
+void		command_queue(char *input, char ***envi, t_bin **bins)
 {
 	int		i;
 	char	**commands;
@@ -51,30 +51,4 @@ static void	command_queue(char *input, char ***envi, t_bin **bins)
 	while (commands[++i] != NULL)
 		form_request(commands[i], envi, bins);
 	free_char_array(&commands);
-}
-
-int			input_queue(char ***envi, t_bin **bins)
-{
-	int		ret;
-	char	buf[BUFF_SIZE + 1];
-	char	*str;
-	char	*p;
-
-	if  ((ret = read(0, buf, BUFF_SIZE)))
-	{
-		buf[ret] = '\0';
-		p = ft_strstr(buf, "exit");
-		if (p != NULL && ft_isalnum(*(p + 4)) == 0)
-			return (0);
-		str = ft_strtrim(buf);
-		if (*str != '\0')
-		{
-			if (ft_strchr(str, ';') == NULL)
-				form_request(str, envi, bins);
-			else
-				command_queue(str, envi, bins);
-		}
-		free(str);
-	}
-	return (1);
 }

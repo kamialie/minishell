@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 11:59:28 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 10:45:08 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 12:37:28 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,26 @@ void	set_envi(char **arguments, char ***envi, t_bin **bins)
 	char	**old_envi;
 
 	if (arguments[0] == NULL || arguments[1] == NULL || arguments[2] != NULL)
-	{
 		ft_putendl(WN_SETENV);
-		return ;
-	}
-	new_envi = get_envi_array(*envi, 1);
-	old_envi = *envi;
-	tmp_envi = new_envi;
-	while (*old_envi != NULL)
-		*tmp_envi++ = ft_strdup(*old_envi++);
-	free_char_array(envi);
-	*tmp_envi = join_envi_line(*arguments, *(arguments + 1));
-	if (ft_strequ(*arguments, "PATH"))
+	else
 	{
-		free_bins(bins);
-		init_binaries(get_envi_field("PATH", new_envi) + 5, bins);
+		if ((update_envi_field(*arguments, *(arguments + 1), envi)) == 0)
+		{
+			new_envi = get_envi_array(*envi, 1);
+			old_envi = *envi;
+			tmp_envi = new_envi;
+			while (*old_envi != NULL)
+				*tmp_envi++ = ft_strdup(*old_envi++);
+			free_char_array(envi);
+			*tmp_envi = join_envi_line(*arguments, *(arguments + 1));
+			if (ft_strequ(*arguments, "PATH"))
+			{
+				free_bins(bins);
+				init_binaries(get_envi_field("PATH", new_envi) + 5, bins);
+			}
+			*envi = new_envi;
+		}
 	}
-	*envi = new_envi;
 }
 
 void	unset_envi(char **arguments, char ***envi, t_bin **bins)

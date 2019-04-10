@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 16:30:06 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/06 13:20:57 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 12:40:03 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	free_bins(t_bin **bins)
 	head = *bins;
 	while (head != NULL)
 	{
+		free(head->dir);
 		free_char_array(&head->bins);
 		tmp = head;
 		head = head->next;
