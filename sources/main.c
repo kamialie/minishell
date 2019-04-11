@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/10 16:15:26 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/11 12:17:37 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	handle_sig(int sig)
 	sig = 0;
 	signal(SIGINT, handle_sig);
 	write(1, "\n", 1);
-	//ft_putstr(O_YELLOW "minishell " O_NC);
-	g_control = 0;
+	if (g_control)
+		ft_putstr(O_YELLOW "minishell " O_NC);
 }
 
 static int	input_queue(char ***envi, t_bin **bins)
@@ -30,8 +30,10 @@ static int	input_queue(char ***envi, t_bin **bins)
 	char	*str;
 	char	*p;
 
+	ft_putstr(O_YELLOW "minishell " O_NC);
 	if ((ret = read(0, buf, BUFF_SIZE)))
 	{
+		g_control = 0;
 		buf[ret] = '\0';
 		p = ft_strstr(buf, "exit");
 		if (p != NULL && ft_isalnum(*(p + 4)) == 0)
@@ -58,14 +60,9 @@ int			main(int args, char **argv, char **environ)
 	bins = NULL;
 	my_envi = init_environment(*argv, environ);
 	init_binaries(get_envi_field("PATH", my_envi) + 5, &bins);
-	ft_putstr(O_YELLOW "minishell " O_NC);
 	signal(SIGINT, handle_sig);
 	while (input_queue(&my_envi, &bins))
-	{
-		if (g_control)
-			ft_putstr(O_YELLOW "minishell " O_NC);
 		g_control = 1;
-	}
 	free_bins(&bins);
 	free_char_array(&my_envi);
 	return (0);
