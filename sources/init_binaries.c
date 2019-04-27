@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 12:22:14 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/10 15:48:04 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 19:21:34 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	**get_binaries(char *dir_path)
 		file_path = ft_strjoin_mid(dir_path, file->d_name, '/');
 		if (access(file_path, X_OK) == 0 && *file->d_name != '.')
 			ft_lstadd(&head, ft_lstnew(file->d_name, ft_strlen(file->d_name)));
+		free(file_path);
 	}
 	closedir(dir);
 	return (join_bin_array(head));
@@ -105,6 +106,6 @@ void	init_binaries(char *path, t_bin **bins)
 		free(dir);
 	}
 	else
-		push_back_bin(&head, get_bin_direct(path));
+		push_back_bin(&head, get_bin_direct(ft_strdup(path)));
 	*bins = head;
 }

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:25:50 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/10 14:50:01 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 20:07:15 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define NF_FOD_CD CD NF_FOD
 
 # define ER_CD CD "error"
+# define ER_EX SHELL "permission denied: "
 # define ND_CD CD "it's not a directory, honey: "
 # define TMA_CD CD "that's way too much than I can handle"
 
@@ -60,7 +61,8 @@ char			*join_envi_line(char *field, char *value);
 void			init_binaries(char *path, t_bin **bins);
 
 char			**init_arguments(char *input, char **envi);
-char			*check_argument(char *argument, char **envi);
+void			check_argument(char **argument, char **envi);
+void			check_dollar_sign(char **argument, char **envi);
 
 void			form_request(char *str, char ***envi, t_bin **bins);
 void			command_queue(char *input, char ***envi, t_bin **bins);

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 12:38:47 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 15:19:54 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 16:37:18 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static char	*get_shell_path(char *str)
 	s2 = ft_strjoin(s1, "/");
 	free(s1);
 	s1 = ft_strjoin(s2, str);
+	free(s2);
 	line = join_envi_line("SHELL", s1);
 	free(s1);
 	return (line);

@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 10:17:07 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 16:01:46 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/11 12:52:44 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,18 @@ static int	go_to_oldpwd(char **envi)
 	return (0);
 }
 
+static void	update_envi(char ***envi)
+{
+	char	*value;
+
+	value = ft_strdup(get_envi_field("PWD", *envi) + 4);
+	update_envi_field("OLDPWD", value, envi);
+	free(value);
+	value = getcwd(NULL, 0);
+	update_envi_field("PWD", value, envi);
+	free(value);
+}
+
 void		change_direct(char **arguments, char ***envi)
 {
 	int		success;
@@ -78,9 +90,5 @@ void		change_direct(char **arguments, char ***envi)
 	else
 		success = go_to_path(*arguments);
 	if (success)
-	{
-		update_envi_field("OLDPWD",
-			ft_strdup(get_envi_field("PWD", *envi) + 4), envi);
-		update_envi_field("PWD", getcwd(NULL, 0), envi);
-	}
+		update_envi(envi);
 }

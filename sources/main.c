@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 19:24:32 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/11 12:17:37 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/11 13:10:20 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static int	g_control = 1;
 
 static void	handle_sig(int sig)
 {
-	sig = 0;
-	signal(SIGINT, handle_sig);
+	(void)sig;
 	write(1, "\n", 1);
 	if (g_control)
 		ft_putstr(O_YELLOW "minishell " O_NC);

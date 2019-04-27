@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 10:15:53 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/09 10:25:55 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/10 18:19:01 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ static t_list	*get_words(char *input, char **envi)
 		while (c != ' ' && c != '\0' && c != '\n' && c != '\t')
 			c = input[++size];
 		str = ft_strsub(input, 0, size);
-		str = check_argument(str, envi);
+		check_argument(&str, envi);
 		ft_lstaddlast(&head, ft_lstnew(str, ft_strlen(str)));
+		free(str);
 		input += size;
 	}
 	return (head);

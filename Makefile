@@ -6,7 +6,7 @@
 #    By: lwyl-the <lwyl-the@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/20 10:25:27 by rgyles            #+#    #+#              #
-#    Updated: 2019/04/09 10:59:54 by rgyles           ###   ########.fr        #
+#    Updated: 2019/04/10 19:43:40 by rgyles           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = main.c\
 	  input_queue.c\
 	  init_arguments.c\
 	  check_argument.c\
+	  check_dollar_sign.c\
 	  envi_support.c\
 	  env_commands.c\
 	  change_direct.c\

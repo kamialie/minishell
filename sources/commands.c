@@ -6,7 +6,7 @@
 /*   By: rgyles <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:23:27 by rgyles            #+#    #+#             */
-/*   Updated: 2019/04/08 14:14:05 by rgyles           ###   ########.fr       */
+/*   Updated: 2019/04/11 12:31:56 by rgyles           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ void		command_path(char **arguments, char **envi)
 	if (access(fbp, F_OK) == -1)
 	{
 		ft_putstr(NF_FOD_CD);
+		ft_putendl(fbp);
+	}
+	else if (access(fbp, X_OK) == -1)
+	{
+		ft_putstr(ER_EX);
 		ft_putendl(fbp);
 	}
 	else
